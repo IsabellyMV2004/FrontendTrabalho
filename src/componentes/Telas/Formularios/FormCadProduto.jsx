@@ -36,72 +36,64 @@ export default function FormCadProdutos(props) {
 
                        }});
     }
-
+    
+        // Função para manipular a submissão do formulário
     function manipularSubmissao(evento) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
+            // Formatar a data de validade para o formato "yyyy-mm-dd"
+            const dataValidadeFormatada = new Date(produto.dataValidade).toLocaleDateString('pt-BR');
+            produto.dataValidade = dataValidadeFormatada;
 
             if (!props.modoEdicao) {
-                //cadastrar o produto
+                // Cadastrar o produto
                 gravarProduto(produto)
-                .then((resultado)=>{
-                    if (resultado.status){
-                        //exibir tabela com o produto incluído
-                        props.setExibirTabela(true);
-                    }
-                    else{
-                        toast.error(resultado.mensagem);
-                    }
-                });
-            }
-            else {
-                //editar o produto
-                /*altera a ordem dos registros
-                props.setListaDeProdutos([...props.listaDeProdutos.filter(
-                    (item) => {
-                        return item.codigo !== produto.codigo;
-                    }
-                ), produto]);*/
-
+                    .then((resultado) => {
+                        if (resultado.status) {
+                            props.setExibirTabela(true);
+                        } else {
+                            toast.error(resultado.mensagem);
+                        }
+                    });
+            } else {
+                // Editar o produto
                 alterarProduto(produto)
-                .then((resultado)=>{
-                    if (resultado.status){
-                        //exibir tabela com o produto incluído
-                            //não altera a ordem dos registros
-                        props.setListaDeProdutos(props.listaDeProdutos.map((item) => {
-                            if (item.codigo !== produto.codigo)
-                                return item
-                            else
-                                return produto
-                        }));
+                    .then((resultado) => {
+                        if (resultado.status) {
+                            props.setListaDeProdutos(
+                                props.listaDeProdutos.map((item) => {
+                                    if (item.codigo !== produto.codigo) return item;
+                                    else return produto;
+                                })
+                            );
 
-                        //voltar para o modo de inclusão
-                        props.setModoEdicao(false);
-                        props.setProdutoSelecionado({
-                            codigo: 0,
-                            descricao: "",
-                            precoCusto: 0,
-                            precoVenda: 0,
-                            qtdEstoque: 0,
-                            urlImagem: "",
-                            dataValidade: ""
-                        });
-                        props.setExibirTabela(true);
-                    }
-                    else{
-                        toast.error(resultado.mensagem);
-                    }
-                });
-                
+                            // Após a alteração, resetar o estado para o modo de adição
+                            props.setModoEdicao(false); // Mudar para o modo de adicionar
+                            
+                            // Resetar o produto selecionado
+                            props.setProdutoSelecionado({
+                                codigo: 0,
+                                descricao: "",
+                                precoCusto: 0,
+                                precoVenda: 0,
+                                qtdEstoque: 0,
+                                urlImagem: "",
+                                dataValidade: "",
+                                categoria: {}
+                            });
+
+                            // Mostrar a tabela novamente
+                            props.setExibirTabela(true);
+                        } else {
+                            toast.error(resultado.mensagem);
+                        }
+                    });
             }
-
-        }
-        else {
+        } else {
             setFormValidado(true);
         }
         evento.preventDefault();
         evento.stopPropagation();
-
     }
 
     function manipularMudanca(evento) {
@@ -111,6 +103,7 @@ export default function FormCadProdutos(props) {
     }
 
     return (
+        
         <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
             <Row className="mb-4">
                 <Form.Group as={Col} md="4">
@@ -212,18 +205,18 @@ export default function FormCadProdutos(props) {
                 </Form.Group>
             </Row>
             <Row className="mb-4">
-                <Form.Group as={Col} md="4">
-                    <Form.Label>Válido até:</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="dataValidade"
-                        name="dataValidade"
-                        value={new Date(produto.dataValidade).toLocaleDateString()}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe a data de validade do produto!</Form.Control.Feedback>
-                </Form.Group>
+                 <Form.Group as={Col} md="4">
+                <Form.Label>Válido até:</Form.Label>
+                <Form.Control
+                    required
+                    type="date" 
+                    id="dataValidade"
+                    name="dataValidade"
+                    value={produto.dataValidade ? produto.dataValidade.split('T')[0] : ''}  
+                    onChange={manipularMudanca}
+                />
+                <Form.Control.Feedback type="invalid">Por favor, informe a data de validade do produto!</Form.Control.Feedback>
+            </Form.Group>
                 <Form.Group as={Col} md={7}>
                     <Form.Label>Categoria:</Form.Label>
                     <Form.Select id='categoria' 
@@ -258,6 +251,5 @@ export default function FormCadProdutos(props) {
             </Row>
             <Toaster position="top-right"/>
         </Form>
-        
     );
 }
