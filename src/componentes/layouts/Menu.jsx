@@ -41,6 +41,7 @@ export default function Menu(props) {
                             }
 
                         }>Sair</Nav.Link>
+                        <Nav.Link >Usuario Logado: {usuario.usuario}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
