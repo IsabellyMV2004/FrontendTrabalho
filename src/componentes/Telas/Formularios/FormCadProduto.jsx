@@ -68,25 +68,25 @@ export default function FormCadProdutos(props) {
                     if (resultado.status){
                         //exibir tabela com o produto incluído
                             //não altera a ordem dos registros
-                    props.setListaDeProdutos(props.listaDeProdutos.map((item) => {
-                        if (item.codigo !== produto.codigo)
-                            return item
-                        else
-                            return produto
-                    }));
+                        props.setListaDeProdutos(props.listaDeProdutos.map((item) => {
+                            if (item.codigo !== produto.codigo)
+                                return item
+                            else
+                                return produto
+                        }));
 
-                    //voltar para o modo de inclusão
-                    props.setModoEdicao(false);
-                    props.setProdutoSelecionado({
-                        codigo: 0,
-                        descricao: "",
-                        precoCusto: 0,
-                        precoVenda: 0,
-                        qtdEstoque: 0,
-                        urlImagem: "",
-                        dataValidade: ""
-                    });
-                    props.setExibirTabela(true);
+                        //voltar para o modo de inclusão
+                        props.setModoEdicao(false);
+                        props.setProdutoSelecionado({
+                            codigo: 0,
+                            descricao: "",
+                            precoCusto: 0,
+                            precoVenda: 0,
+                            qtdEstoque: 0,
+                            urlImagem: "",
+                            dataValidade: ""
+                        });
+                        props.setExibirTabela(true);
                     }
                     else{
                         toast.error(resultado.mensagem);
