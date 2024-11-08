@@ -1,4 +1,6 @@
 import { Button, Container, Table } from "react-bootstrap";
+import { excluirProduto } from "../../../servicos/servicoProduto";
+import toast, {Toaster} from 'react-hot-toast';
 
 export default function TabelaProdutos(props) {
 
@@ -8,13 +10,23 @@ export default function TabelaProdutos(props) {
         props.setExibirTabela(false);
     }
 
-    function excluirProduto(produto){
+    function ExcluirProduto(produto){
         if(window.confirm("Deseja realmente excluir o produto " + produto.descricao)){
+            excluirProduto(produto)
+                .then((resultado)=>{
+                    if (resultado.status){
+                        //exibir tabela com o produto incluído
+                        props.setListaDeProdutos(props.listaDeProdutos.filter(
+                            (item)=>{
+                                        return item.codigo != produto.codigo     
+                                    }));
+                    }
+                    else{
+                        toast.error(resultado.mensagem);
+                    }
+                });
             //abordagem utilizando a sintaxe permitida da linguagem
-            props.setListaDeProdutos(props.listaDeProdutos.filter(
-                (item)=>{
-                            return item.codigo != produto.codigo     
-                        }));
+            
 
             //abordagem elementar            
             /*let novaLista= []
@@ -71,7 +83,7 @@ export default function TabelaProdutos(props) {
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                 </svg>
                                             </Button> <Button onClick={ ()=> {
-                                                excluirProduto(produto);
+                                                ExcluirProduto(produto);
                                             }} variant="danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>

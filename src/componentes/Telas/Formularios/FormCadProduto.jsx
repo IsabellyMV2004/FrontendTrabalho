@@ -3,7 +3,7 @@ import { Button, Spinner, Col, Form, InputGroup,
  } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { consultarCategoria } from '../../../servicos/servicoCategoria';
-import { gravarProduto } from '../../../servicos/servicoProduto';
+import { alterarProduto, gravarProduto } from '../../../servicos/servicoProduto';
 
 import toast, {Toaster} from 'react-hot-toast';
 
@@ -63,26 +63,36 @@ export default function FormCadProdutos(props) {
                     }
                 ), produto]);*/
 
-                //não altera a ordem dos registros
-                props.setListaDeProdutos(props.listaDeProdutos.map((item) => {
-                    if (item.codigo !== produto.codigo)
-                        return item
-                    else
-                        return produto
-                }));
+                alterarProduto(produto)
+                .then((resultado)=>{
+                    if (resultado.status){
+                        //exibir tabela com o produto incluído
+                            //não altera a ordem dos registros
+                    props.setListaDeProdutos(props.listaDeProdutos.map((item) => {
+                        if (item.codigo !== produto.codigo)
+                            return item
+                        else
+                            return produto
+                    }));
 
-                //voltar para o modo de inclusão
-                props.setModoEdicao(false);
-                props.setProdutoSelecionado({
-                    codigo: 0,
-                    descricao: "",
-                    precoCusto: 0,
-                    precoVenda: 0,
-                    qtdEstoque: 0,
-                    urlImagem: "",
-                    dataValidade: ""
+                    //voltar para o modo de inclusão
+                    props.setModoEdicao(false);
+                    props.setProdutoSelecionado({
+                        codigo: 0,
+                        descricao: "",
+                        precoCusto: 0,
+                        precoVenda: 0,
+                        qtdEstoque: 0,
+                        urlImagem: "",
+                        dataValidade: ""
+                    });
+                    props.setExibirTabela(true);
+                    }
+                    else{
+                        toast.error(resultado.mensagem);
+                    }
                 });
-                props.setExibirTabela(true);
+                
             }
 
         }

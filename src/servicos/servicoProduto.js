@@ -13,7 +13,7 @@ export async function gravarProduto(produto){
 }
 
 export async function alterarProduto(produto){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + produto.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarProduto(produto){
 
 export async function excluirProduto(produto){
     const resposta = await fetch(urlBase + "/" + produto.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;
