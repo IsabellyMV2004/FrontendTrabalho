@@ -1,21 +1,21 @@
 import { Button, Container, Table} from "react-bootstrap";
-import { categorias } from "../../../dados/mockCategorias";
+import { fornecedores } from "../../../dados/mockFornecedores";
 
-export default function TabelaCategorias(props) {
+export default function TabelaFornecedores(props) {
 
-    function alterarCategoria(categoria){
+    function alterarFornecedor(fornecedor){
         props.setModoEdicao(true);
-        props.setCategoriaSelecionado(categoria);
+        props.setFornecedorSelecionado(fornecedor);
         props.setExibirTabela(false);
     }
 
 
-    function excluirCategoria(categoria){
-        if(window.confirm("Deseja realmente excluir a categoria " + categoria.descricao)){
+    function excluirFornecedor(fornecedor){
+        if(window.confirm("Deseja realmente excluir o fornecedor " + fornecedor.nome)){
             // abordagem utilizando a sintaxe permitida da linguagem
-            props.setListaDeCategorias(props.listaDeCategorias.filter(
+            props.setListaDeFornecedores(props.listaDeFornecedores.filter(
                 (item)=>{
-                            return item.codigo != categoria.codigo
+                            return item.codigo != fornecedor.codigo
                         }));
         }
     }
@@ -32,20 +32,26 @@ export default function TabelaCategorias(props) {
                 <Table striped bordered hover>
                     <thead>
                         <th>Código</th>
-                        <th>Descrição</th>
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                        <th>Contato</th>
+                        <th>CPF</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
                        {
                         // a ? é para testar se é um valor valido. Se existir executa, se não não executa
-                        props.listaDeCategorias?.map((categoria) => {
+                        props.listaDeFornecedores?.map((fornecedor) => {
                             return (
                                 <tr>
-                                    <td>{categoria.codigo}</td>
-                                    <td>{categoria.descricao}</td>
+                                    <td>{fornecedor.codigo}</td>
+                                    <td>{fornecedor.nome}</td>
+                                    <td>{fornecedor.endereco}</td>
+                                    <td>{fornecedor.contato}</td>
+                                    <td>{fornecedor.cpf}</td>
                                     <td>
                                         <Button onClick={()=> {
-                                            alterarCategoria(categoria);
+                                            alterarFornecedor(fornecedor);
                                         }}
                                         variant="warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -53,7 +59,7 @@ export default function TabelaCategorias(props) {
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                             </svg>
                                         </Button> <Button onClick={()=> {
-                                            excluirCategoria(categoria);
+                                            excluirFornecedor(fornecedor);
                                         }} variant="danger">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -67,6 +73,7 @@ export default function TabelaCategorias(props) {
                        }
                     </tbody>
                 </Table>
+                <p>Quantidade de fornecedores cadastrados: {props.listaDeFornecedores.length}</p>
             </Container>
         </>
     );

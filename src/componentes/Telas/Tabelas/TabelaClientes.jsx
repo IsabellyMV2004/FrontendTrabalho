@@ -1,21 +1,21 @@
 import { Button, Container, Table} from "react-bootstrap";
-import { categorias } from "../../../dados/mockCategorias";
+import { clientes } from "../../../dados/mockClientes";
 
-export default function TabelaCategorias(props) {
+export default function TabelaClientes(props) {
 
-    function alterarCategoria(categoria){
+    function alterarCliente(cliente){
         props.setModoEdicao(true);
-        props.setCategoriaSelecionado(categoria);
+        props.setClienteSelecionado(cliente);
         props.setExibirTabela(false);
     }
 
 
-    function excluirCategoria(categoria){
-        if(window.confirm("Deseja realmente excluir a categoria " + categoria.descricao)){
+    function excluirCliente(cliente){
+        if(window.confirm("Deseja realmente excluir o cliente " + cliente.nome)){
             // abordagem utilizando a sintaxe permitida da linguagem
-            props.setListaDeCategorias(props.listaDeCategorias.filter(
+            props.setListaDeClientes(props.listaDeClientes.filter(
                 (item)=>{
-                            return item.codigo != categoria.codigo
+                            return item.codigo != cliente.codigo
                         }));
         }
     }
@@ -32,20 +32,26 @@ export default function TabelaCategorias(props) {
                 <Table striped bordered hover>
                     <thead>
                         <th>Código</th>
-                        <th>Descrição</th>
+                        <th>Nome</th>
+                        <th>Endereco</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
                        {
                         // a ? é para testar se é um valor valido. Se existir executa, se não não executa
-                        props.listaDeCategorias?.map((categoria) => {
+                        props.listaDeClientes?.map((cliente) => {
                             return (
                                 <tr>
-                                    <td>{categoria.codigo}</td>
-                                    <td>{categoria.descricao}</td>
+                                    <td>{cliente.codigo}</td>
+                                    <td>{cliente.nome}</td>
+                                    <td>{cliente.endereco}</td>
+                                    <td>{cliente.email}</td>
+                                    <td>{cliente.telefone}</td>
                                     <td>
                                         <Button onClick={()=> {
-                                            alterarCategoria(categoria);
+                                            alterarCliente(cliente);
                                         }}
                                         variant="warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -53,7 +59,7 @@ export default function TabelaCategorias(props) {
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                             </svg>
                                         </Button> <Button onClick={()=> {
-                                            excluirCategoria(categoria);
+                                            excluirCliente(cliente);
                                         }} variant="danger">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -67,6 +73,7 @@ export default function TabelaCategorias(props) {
                        }
                     </tbody>
                 </Table>
+                <p>Quantidade de clientes cadastrados: {props.listaDeClientes.length}</p>
             </Container>
         </>
     );
