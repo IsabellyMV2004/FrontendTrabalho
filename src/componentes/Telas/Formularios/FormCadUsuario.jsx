@@ -1,65 +1,106 @@
-import { Button } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
+import { Button, Spinner, Col, Form, InputGroup,
+         Row
+ } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { consultarPrivilegio } from '../../../servicos/servicoPrivilegio';
+import { alterarUsuario, gravarUsuario } from '../../../servicos/servicoUsuario';
+
+import toast, {Toaster} from 'react-hot-toast';
 
 export default function FormCadUsuarios(props) {
     const [usuario, setUsuario] = useState(props.usuarioSelecionado);
-
     const [formValidado, setFormValidado] = useState(false);
-    function manipularSubmissao(evento){
-        const form = evento.currentTarget;
-        if(form.checkValidity()){
-            if (!props.modoEdicao){
-                props.setListaDeUsuarios([...props.listaDeUsuarios, usuario]);
-                props.setExibirTabela(true);
-                
+    const [privilegios, setPrivilegios] = useState([]);
+    const [temPrivilegios, setTemPrivilegios] = useState(false);
+
+    useEffect(()=>{
+        consultarPrivilegio().then((resultado)=>{
+            if (Array.isArray(resultado)){
+                setPrivilegios(resultado);
+                setTemPrivilegios(true);
             }
             else{
-                props.setListaDeUsuarios([...props.listaDeUsuarios.filter(
-                    (item) => {
-                            return item.codigo !== usuario.codigo;
-                    }
-                ),usuario]);
+                toast.error("Não foi possível carregar as privilegios");
+            }
+        }).catch((erro)=>{
+            setTemPrivilegios(false);
+            toast.error("Não foi possível carregar as privilegios");
+        });
+        
+    },[]); //didMount
 
-                // não altera a ordem dos registros
-                props.setListaDeUsuarios(props.listaDeUsuarios.map((item) => {
-                    if(item.codigo !== usuario.codigo)
-                        return item
-                    else
-                        return usuario
-                }));
+    function selecionarPrivilegio(evento){
+        setUsuario({...usuario, 
+                       privilegio:{
+                        codigo: evento.currentTarget.value
 
-                //voltar para o modo 
-                props.setModoEdicao(false);
-                props.setUsuarioSelecionado({
-                    codigo:0,
-                    email:"",
-                    senha:"",
-                    nome:"",
-                    telefone:"",
-                    endereco:""
-                })
-                props.setExibirTabela(true);
-            }            
-        }
-        else{
+                       }});
+    }
+    
+        // Função para manipular a submissão do formulário
+    function manipularSubmissao(evento) {
+        const form = evento.currentTarget;
+        if (form.checkValidity()) {
+            // Formatar a data de validade para o formato "yyyy-mm-dd"
+
+            if (!props.modoEdicao) {
+                // Cadastrar o usuario
+                gravarUsuario(usuario)
+                    .then((resultado) => {
+                        if (resultado.status) {
+                            props.setExibirTabela(true);
+                        } else {
+                            toast.error(resultado.mensagem);
+                        }
+                    });
+            } else {
+                // Editar o usuario
+                alterarUsuario(usuario)
+                    .then((resultado) => {
+                        if (resultado.status) {
+                            props.setListaDeUsuarios(
+                                props.listaDeUsuarios.map((item) => {
+                                    if (item.codigo !== usuario.codigo) return item;
+                                    else return usuario;
+                                })
+                            );
+
+                            // Após a alteração, resetar o estado para o modo de adição
+                            props.setModoEdicao(false); // Mudar para o modo de adicionar
+                            
+                            // Resetar o usuario selecionado
+                            props.setUsuarioSelecionado({
+                                codigo: 0,
+                                email: "",
+                                senha: "",
+                                nome: "",
+                                telefone: "",
+                                endereco: "",
+                                nivel: {}
+                            });
+
+                            // Mostrar a tabela novamente
+                            props.setExibirTabela(true);
+                        } else {
+                            toast.error(resultado.mensagem);
+                        }
+                    });
+            }
+        } else {
             setFormValidado(true);
         }
         evento.preventDefault();
         evento.stopPropagation();
     }
 
-    function manipularMudanca(evento){
+    function manipularMudanca(evento) {
         const elemento = evento.target.name;
         const valor = evento.target.value;
-                // ... operador de espalhamento
-        setUsuario({...usuario, [elemento]:valor});
+        setUsuario({ ...usuario, [elemento]: valor });
     }
 
     return (
+        
         <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
             <Row className="mb-4">
                 <Form.Group as={Col} md="4">
@@ -78,85 +119,108 @@ export default function FormCadUsuarios(props) {
             </Row>
             <Row className="mb-4">
                 <Form.Group as={Col} md="12">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Nome</Form.Label>
                     <Form.Control
                         required
                         type="text"
-                        id="email"
-                        name="email"
-                        value={usuario.email}
+                        id="nome"
+                        name="nome"
+                        value={usuario.nome}
                         onChange={manipularMudanca}
                     />
-                    <Form.Control.Feedback type="invalid">Por favor, informe o email do usuario!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Por favor, informe o nome do usuario!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
             <Row className="mb-4">
-                <Form.Group as={Col} md="12">
-                    <Form.Label>Senha</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
+                <Row className="mb-4">
+                    <Form.Group as={Col} md="12">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            id="email"
+                            name="email"
+                            value={usuario.email}
+                            onChange={manipularMudanca}
+                        />
+                        <Form.Control.Feedback type="invalid">Por favor, informe o email do usuario!</Form.Control.Feedback>
+                    </Form.Group>
+                </Row>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Senha:</Form.Label>
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Password"
                         id="senha"
                         name="senha"
-                        value={usuario.senha}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe a senha do usuario!</Form.Control.Feedback>
+                        ref={senha}
+                         />
                 </Form.Group>
-            </Row>
-            <Row className="mb-4">
-                <Form.Group as={Col} md="4">
-                    <Form.Label>Nome:</Form.Label>
+                <Row className="mb-4">
+                    <Form.Group as={Col} md="12">
+                        <Form.Label>Telefone</Form.Label>
                         <Form.Control
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            aria-describedby="nome"
-                            value={usuario.nome}
-                            onChange={manipularMudanca}
                             required
+                            type="text"
+                            id="telefone"
+                            name="telefone"
+                            value={usuario.telefone}
+                            onChange={manipularMudanca}
                         />
-                        <Form.Control.Feedback type="invalid">Por favor, informe o nome do usuario!</Form.Control.Feedback>
-                </Form.Group>
+                        <Form.Control.Feedback type="invalid">Por favor, informe o telefone do usuario!</Form.Control.Feedback>
+                    </Form.Group>
+                </Row>
             </Row>
             <Row className="mb-4">
-                <Form.Group as={Col} md="12">
-                    <Form.Label>Telefone</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="telefone"
-                        name="telefone"
-                        value={usuario.telefone}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe o telefone do usuario!</Form.Control.Feedback>
-                </Form.Group>
-            </Row>
+                    <Form.Group as={Col} md="12">
+                        <Form.Label>Endereco</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            id="endereco"
+                            name="endereco"
+                            value={usuario.endereco}
+                            onChange={manipularMudanca}
+                        />
+                        <Form.Control.Feedback type="invalid">Por favor, informe o endereco do usuario!</Form.Control.Feedback>
+                    </Form.Group>
+                </Row>
             <Row className="mb-4">
-                <Form.Group as={Col} md="12">
-                    <Form.Label>Endereço</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="endereco"
-                        name="endereco"
-                        value={usuario.endereco}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe o endereço do usuario!</Form.Control.Feedback>
+        <Form.Group as={Col} md="4">
+            </Form.Group>
+                <Form.Group as={Col} md={7}>
+                    <Form.Label>Privilegio:</Form.Label>
+                    <Form.Select id='privilegio' 
+                                 name='privilegio'
+                                 onChange={selecionarPrivilegio}>
+                        {// criar em tempo de execução as privilegios existentes no banco de dados
+                            privilegios.map((privilegio) =>{
+                                return <option value={privilegio.codigo}>
+                                            {privilegio.nome}
+                                       </option>
+                            })
+                        }
+                        
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group as={Col} md={1}>
+                    {
+                      !temPrivilegios ? <Spinner className='mt-4' animation="border" variant="success" />
+                      : ""
+                    }
                 </Form.Group>
             </Row>
             <Row className='mt-2 mb-2'>
                 <Col md={1}>
-                <Button type="submit">{props.modoEdicao ? "Alterar":"Confirmar"}</Button>
+                    <Button type="submit" disabled={!temPrivilegios}>{props.modoEdicao ? "Alterar" : "Confirmar"}</Button>
                 </Col>
-                <Col md={{offset:1}} >
+                <Col md={{ offset: 1 }}>
                     <Button onClick={() => {
                         props.setExibirTabela(true);
                     }}>Voltar</Button>
                 </Col>
             </Row>
+            <Toaster position="top-right"/>
         </Form>
     );
 }

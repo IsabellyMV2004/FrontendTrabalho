@@ -6,7 +6,11 @@ export const usuarios = [
         "nome": "Uma Pessoa Aleatoria",
         "telefone": "00028922",
         "endereco":"uma rua qualquer",
-        "nivel":"basico"
+        "nivel":
+        {
+            "codigo": 1,
+            "descricao":"basico"
+        }
     },
     {
         "codigo": 2,
@@ -15,7 +19,10 @@ export const usuarios = [
         "nome": "Kleber da Silva",
         "telefone": "00000000",
         "endereco":"não se lembra",
-        "nivel":"basico"
+        "nivel": {
+            "codigo": 2,
+            "descricao":"gerente"
+        }
     },
     {
         "codigo": 3,
@@ -24,6 +31,9 @@ export const usuarios = [
         "nome": "admin",
         "telefone": "00000000",
         "endereco":"não se lembra",
-        "nivel":"alto"
+        "nivel":{
+            "codigo": 3,
+            "descricao":"administrador"
+        }
     }
 ];
