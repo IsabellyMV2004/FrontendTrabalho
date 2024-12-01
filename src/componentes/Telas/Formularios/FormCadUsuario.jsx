@@ -31,7 +31,7 @@ export default function FormCadUsuarios(props) {
 
     function selecionarPrivilegio(evento){
         setUsuario({...usuario, 
-                       privilegio:{
+                       privilegios:{
                         codigo: evento.currentTarget.value
 
                        }});
@@ -191,13 +191,13 @@ export default function FormCadUsuarios(props) {
             </Form.Group>
                 <Form.Group as={Col} md={7}>
                     <Form.Label>Privilegio:</Form.Label>
-                    <Form.Select id='privilegio' 
-                                 name='privilegio'
+                    <Form.Select id='privilegios' 
+                                 name='privilegios'
                                  onChange={selecionarPrivilegio}>
                         {// criar em tempo de execução as privilegios existentes no banco de dados
-                            privilegios.map((privilegio) =>{
-                                return <option value={privilegio.codigo}>
-                                            {privilegio.nome}
+                            privilegios.map((privilegios) =>{
+                                return <option value={privilegios.codigo}>
+                                            {privilegios.nome}
                                        </option>
                             })
                         }

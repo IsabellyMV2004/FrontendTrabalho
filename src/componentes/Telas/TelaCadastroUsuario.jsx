@@ -21,7 +21,7 @@ export default function TelaCadastroUsuario(props) {
         nome: "",
         telefone: "",
         endereco: "",
-        privilegios: {},
+        privilegios: {}
     });
     
     useEffect(() => {
