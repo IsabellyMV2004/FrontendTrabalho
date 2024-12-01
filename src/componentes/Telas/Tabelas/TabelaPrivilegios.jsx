@@ -1,38 +1,38 @@
 import { Button, Container, Table } from "react-bootstrap";
-import { excluirUsuario } from "../../../servicos/servicoUsuario";
+import { excluirPrivilegio } from "../../../servicos/servicoPrivilegio";
 
-export default function TabelaUsuarios(props) {
+export default function TabelaPrivilegios(props) {
 
-    function editarUsuario(usuario){
+    function editarPrivilegio(privilegio){
         props.setModoEdicao(true);
-        props.setUsuarioSelecionado(usuario)
+        props.setPrivilegioSelecionado(privilegio)
         props.setExibirTabela(false);
     }
 
-    function excluirUsuarioFrontEnd(usuario){
-        if(window.confirm("Deseja realmente excluir o usuario " + usuario.nome)){
+    function excluirPrivilegioFrontEnd(privilegio){
+        if(window.confirm("Deseja realmente excluir a privilegio " + privilegio.descricao)){
             //abordagem utilizando a sintaxe permitida da linguagem
-            excluirUsuario(usuario).then((resposta)=>{
+            excluirPrivilegio(privilegio).then((resposta)=>{
                 if(resposta.status){
-                    props.setListaDeUsuarios(props.listaDeUsuarios.filter(
+                    props.setListaDePrivilegios(props.listaDePrivilegios.filter(
                         (item)=>{
-                                    return item.codigo != usuario.codigo     
+                                    return item.codigo != privilegio.codigo     
                                 }));
                 }
                 else{
-                    window.alert("Não foi possivel excluir o usuario: "+ resposta.mensagem);
+                    window.alert("Não foi possivel excluir o privilegio: "+ resposta.mensagem);
                 }
             })
             
 
             //abordagem elementar            
             /*let novaLista= []
-            for (let i=0; i < props.listaDeUsuarios.length; i++){
-                if (props.listaDeUsuarios[i].codigo != usuario.codigo){
-                    novaLista.push(props.listaDeUsuarios[i])
+            for (let i=0; i < props.listaDePrivilegios.length; i++){
+                if (props.listaDePrivilegios[i].codigo != privilegio.codigo){
+                    novaLista.push(props.listaDePrivilegios[i])
                 }
             }
-            props.setListaDeUsuarios(novaLista);*/
+            props.setListaDePrivilegios(novaLista);*/
         }
     }
 
@@ -48,32 +48,26 @@ export default function TabelaUsuarios(props) {
                 <Table striped bordered hover>
                     <thead>
                         <th>Código</th>
-                        <th>Email</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Endereço</th>
+                        <th>Descrição</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
                         {
-                            props.listaDeUsuarios?.map((usuario) => {
+                            props.listaDePrivilegios?.map((privilegio) => {
                                 return (
                                     <tr>
-                                        <td>{usuario.codigo}</td>
-                                        <td>{usuario.email}</td>
-                                        <td>{usuario.nome}</td>
-                                        <td>{usuario.telefone}</td>
-                                        <td>{usuario.endereco}</td>
+                                        <td>{privilegio.codigo}</td>
+                                        <td>{privilegio.descricao}</td>
                                         <td>
                                             <Button onClick={()=>{
-                                                editarUsuario(usuario);
+                                                editarPrivilegio(privilegio);
                                             }}variant="warning">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                 </svg>
                                             </Button> <Button onClick={ ()=> {
-                                                excluirUsuarioFrontEnd(usuario);
+                                                excluirPrivilegioFrontEnd(privilegio);
                                             }} variant="danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -87,7 +81,7 @@ export default function TabelaUsuarios(props) {
                         }
                     </tbody>
                 </Table>
-                <p>Quatidade de usuarios cadastrados: {props.listaDeUsuarios.length}</p>
+                <p>Quatidade de privilegios cadastradas: {props.listaDePrivilegios.length}</p>
             </Container>
         </>
     );

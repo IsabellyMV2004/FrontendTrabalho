@@ -1,38 +1,38 @@
 import { Button, Container, Table } from "react-bootstrap";
-import { excluirUsuario } from "../../../servicos/servicoUsuario";
+import { excluirFornecedor } from "../../../servicos/servicoFornecedor";
 
-export default function TabelaUsuarios(props) {
+export default function TabelaFornecedores(props) {
 
-    function editarUsuario(usuario){
+    function editarFornecedor(fornecedor){
         props.setModoEdicao(true);
-        props.setUsuarioSelecionado(usuario)
+        props.setFornecedorSelecionado(fornecedor)
         props.setExibirTabela(false);
     }
 
-    function excluirUsuarioFrontEnd(usuario){
-        if(window.confirm("Deseja realmente excluir o usuario " + usuario.nome)){
+    function excluirFornecedorFrontEnd(fornecedor){
+        if(window.confirm("Deseja realmente excluir o fornecedor " + fornecedor.nome)){
             //abordagem utilizando a sintaxe permitida da linguagem
-            excluirUsuario(usuario).then((resposta)=>{
+            excluirFornecedor(fornecedor).then((resposta)=>{
                 if(resposta.status){
-                    props.setListaDeUsuarios(props.listaDeUsuarios.filter(
+                    props.setListaDeFornecedores(props.listaDeFornecedores.filter(
                         (item)=>{
-                                    return item.codigo != usuario.codigo     
+                                    return item.codigo != fornecedor.codigo     
                                 }));
                 }
                 else{
-                    window.alert("Não foi possivel excluir o usuario: "+ resposta.mensagem);
+                    window.alert("Não foi possivel excluir o fornecedor: "+ resposta.mensagem);
                 }
             })
             
 
             //abordagem elementar            
             /*let novaLista= []
-            for (let i=0; i < props.listaDeUsuarios.length; i++){
-                if (props.listaDeUsuarios[i].codigo != usuario.codigo){
-                    novaLista.push(props.listaDeUsuarios[i])
+            for (let i=0; i < props.listaDeFornecedores.length; i++){
+                if (props.listaDeFornecedores[i].codigo != fornecedor.codigo){
+                    novaLista.push(props.listaDeFornecedores[i])
                 }
             }
-            props.setListaDeUsuarios(novaLista);*/
+            props.setListaDeFornecedores(novaLista);*/
         }
     }
 
@@ -48,32 +48,32 @@ export default function TabelaUsuarios(props) {
                 <Table striped bordered hover>
                     <thead>
                         <th>Código</th>
-                        <th>Email</th>
                         <th>Nome</th>
-                        <th>Telefone</th>
                         <th>Endereço</th>
+                        <th>Contato</th>
+                        <th>CPF</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
                         {
-                            props.listaDeUsuarios?.map((usuario) => {
+                            props.listaDeFornecedores?.map((fornecedor) => {
                                 return (
                                     <tr>
-                                        <td>{usuario.codigo}</td>
-                                        <td>{usuario.email}</td>
-                                        <td>{usuario.nome}</td>
-                                        <td>{usuario.telefone}</td>
-                                        <td>{usuario.endereco}</td>
+                                        <td>{fornecedor.codigo}</td>
+                                        <td>{fornecedor.nome}</td>
+                                        <td>{fornecedor.endereco}</td>
+                                        <td>{fornecedor.contato}</td>
+                                        <td>{fornecedor.cpf}</td>
                                         <td>
                                             <Button onClick={()=>{
-                                                editarUsuario(usuario);
+                                                editarFornecedor(fornecedor);
                                             }}variant="warning">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                 </svg>
                                             </Button> <Button onClick={ ()=> {
-                                                excluirUsuarioFrontEnd(usuario);
+                                                excluirFornecedorFrontEnd(fornecedor);
                                             }} variant="danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -87,7 +87,7 @@ export default function TabelaUsuarios(props) {
                         }
                     </tbody>
                 </Table>
-                <p>Quatidade de usuarios cadastrados: {props.listaDeUsuarios.length}</p>
+                <p>Quatidade de fornecedors cadastrados: {props.listaDeFornecedores.length}</p>
             </Container>
         </>
     );

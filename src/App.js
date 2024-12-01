@@ -7,6 +7,10 @@ import TelaLogin from "./componentes/Telas/TelaLogin";
 import { useState, createContext } from 'react';
 import store from './redux/store';
 import { Provider } from "react-redux";
+import TelaCadastroFornecedor from "./componentes/Telas/TelaCadastroFornecedor";
+import TelaCadastroCliente from "./componentes/Telas/TelaCadastroCliente";
+import TelaCadastroUsuario from "./componentes/Telas/TelaCadastroUsuario";
+import TelaCadastroPrivilegio from "./componentes/Telas/TelaCadastroPrivilegio";
 
 export const ContextoUsuario = createContext();
 
@@ -35,6 +39,10 @@ function App() {
               <Routes>
                 <Route path="/produto" element={<TelaCadastroProduto />} />
                 <Route path="/categoria" element={<TelaCadastroCategoria />} />
+                <Route path="/fornecedor" element={<TelaCadastroFornecedor />} />
+                <Route path="/cliente" element={<TelaCadastroCliente />} />
+                <Route path="/usuario" element={<TelaCadastroUsuario />} />
+                <Route path="/privilegio" element={<TelaCadastroPrivilegio />} />
                 <Route path="/" element={<TelaMenu />} />
                 <Route path="*" element={<Tela404 />} />
               </Routes>

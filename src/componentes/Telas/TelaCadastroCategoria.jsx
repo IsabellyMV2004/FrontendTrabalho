@@ -1,15 +1,28 @@
 import { Alert } from "react-bootstrap";
 import FormCadCategorias from "./Formularios/FormCadCategoria";
 import Pagina from "../layouts/Pagina";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabelaCategorias from "./Tabelas/TabelaCategorias";
-import {categorias} from "../../dados/mockCategorias";
+//import { categorias } from "../../dados/mockCategorias";
+import { consultarCategoria } from "../../servicos/servicoCategoria";
 
 export default function TelaCadastroCategoria(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
-    const [listaDeCategorias, setListaDeCategorias] = useState(categorias);
+    const [listaDeCategorias, setListaDeCategorias] = useState([]);
     const [modoEdicao, setModoEdicao] = useState(false);
-    const [categoriaSelecionado, setCategoriaSelecionado] = useState(categorias);
+    //const [categorias, setCategorias] = useState([]);
+    const [categoriaSelecionado, setCategoriaSelecionado] = useState({
+        codigo:0,
+        descricao:""
+
+    });
+
+    useEffect(()=>{
+        consultarCategoria().then((lista)=>{
+            setListaDeCategorias(lista);
+        });
+    },[]); //listaVazia -> didMount
+   
 
     return (
         <div>
@@ -21,24 +34,23 @@ export default function TelaCadastroCategoria(props) {
                 </Alert>
                 {
                     exibirTabela ?
-                    <TabelaCategorias
-                    listaDeCategorias={listaDeCategorias}
-                    setListaDeCategorias={setListaDeCategorias}
-                    setModoEdicao={setModoEdicao}
-                    setCategoriaSelecionado={setCategoriaSelecionado}
-                    setExibirTabela={setExibirTabela}
-                /> :
-                <FormCadCategorias
-                    listaDeCategorias={listaDeCategorias}
-                    setListaDeCategorias={setListaDeCategorias}
-                    setModoEdicao={setModoEdicao}
-                    setCategoriaSelecionado={setCategoriaSelecionado}
-                    setExibirTabela={setExibirTabela}
-                    modoEdicao={modoEdicao}
-                    categoriaSelecionado={categoriaSelecionado}
-                />
+                        <TabelaCategorias listaDeCategorias={listaDeCategorias}
+                                        setListaDeCategorias={setListaDeCategorias} 
+                                        setExibirTabela={setExibirTabela}
+                                        setModoEdicao={setModoEdicao}
+                                        setCategoriaSelecionado={setCategoriaSelecionado} /> :
+                        <FormCadCategorias listaDeCategorias={listaDeCategorias}
+                                         setListaDeCategorias={setListaDeCategorias}
+                                         setExibirTabela={setExibirTabela}
+                                         categoriaSelecionado={categoriaSelecionado}
+                                         setCategoriaSelecionado={setCategoriaSelecionado}
+                                         modoEdicao={modoEdicao}
+                                         setModoEdicao={setModoEdicao}
+
+                                         />
                 }
             </Pagina>
         </div>
     );
+
 }
