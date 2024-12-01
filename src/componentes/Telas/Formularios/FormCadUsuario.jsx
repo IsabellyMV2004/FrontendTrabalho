@@ -76,7 +76,7 @@ export default function FormCadUsuarios(props) {
                                 nome: "",
                                 telefone: "",
                                 endereco: "",
-                                nivel: {}
+                                privilegios: {}
                             });
 
                             // Mostrar a tabela novamente

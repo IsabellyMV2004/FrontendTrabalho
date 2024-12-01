@@ -21,12 +21,12 @@ export default function TelaCadastroUsuario(props) {
         nome: "",
         telefone: "",
         endereco: "",
-        nivel: {},
+        privilegios: {},
     });
 
     useEffect(() => {
         // Verifica se o usuário logado tem nível básico
-        if (usuario.nivel?.descricao === "basico") {
+        if (usuario.privilegios?.descricao === "basico") {
             alert("Acesso negado. Você não tem permissão para acessar esta página.");
             navigate("/"); // Redireciona para a página inicial ou de login
             return;

@@ -18,7 +18,7 @@ export default function TelaCadastroFornecedor(props) {
         nome:"",
         telefone:"",
         endereco:"",
-        nivel: {}
+        privilegios: {}
 
     });
 

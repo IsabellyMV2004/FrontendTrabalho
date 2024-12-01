@@ -6,7 +6,7 @@ export const usuarios = [
         "nome": "Uma Pessoa Aleatoria",
         "telefone": "00028922",
         "endereco":"uma rua qualquer",
-        "nivel":
+        "privilegios":
         {
             "codigo": 1,
             "descricao":"basico"
@@ -19,7 +19,7 @@ export const usuarios = [
         "nome": "Kleber da Silva",
         "telefone": "00000000",
         "endereco":"não se lembra",
-        "nivel": {
+        "privilegios": {
             "codigo": 2,
             "descricao":"gerente"
         }
@@ -31,7 +31,7 @@ export const usuarios = [
         "nome": "admin",
         "telefone": "00000000",
         "endereco":"não se lembra",
-        "nivel":{
+        "privilegios":{
             "codigo": 3,
             "descricao":"administrador"
         }
