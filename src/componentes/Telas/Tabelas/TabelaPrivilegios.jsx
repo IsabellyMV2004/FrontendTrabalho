@@ -10,7 +10,7 @@ export default function TabelaPrivilegios(props) {
     }
 
     function excluirPrivilegioFrontEnd(privilegio){
-        if(window.confirm("Deseja realmente excluir a privilegio " + privilegio.descricao)){
+        if(window.confirm("Deseja realmente excluir o privilegio " + privilegio.descricao)){
             //abordagem utilizando a sintaxe permitida da linguagem
             excluirPrivilegio(privilegio).then((resposta)=>{
                 if(resposta.status){
@@ -81,7 +81,7 @@ export default function TabelaPrivilegios(props) {
                         }
                     </tbody>
                 </Table>
-                <p>Quatidade de privilegios cadastradas: {props.listaDePrivilegios.length}</p>
+                <p>Quatidade de privilegios cadastrados: {props.listaDePrivilegios.length}</p>
             </Container>
         </>
     );

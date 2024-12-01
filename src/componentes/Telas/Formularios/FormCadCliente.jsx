@@ -10,24 +10,6 @@ import toast, {Toaster} from 'react-hot-toast';
 export default function FormCadClientes(props) {
 const [cliente, setCliente] = useState(props.clienteSelecionado);
 const [formValidado, setFormValidado] = useState(false);
-const [categorias, setCategorias] = useState([]);
-const [temCategorias, setTemCategorias] = useState(false);
-
-useEffect(()=>{
-   consultarCategoria().then((resultado)=>{
-       if (Array.isArray(resultado)){
-           setCategorias(resultado);
-           setTemCategorias(true);
-       }
-       else{
-           toast.error("Não foi possível carregar as categorias");
-       }
-   }).catch((erro)=>{
-       setTemCategorias(false);
-       toast.error("Não foi possível carregar as categorias");
-   });
-   
-},[]); //didMount
 
    // Função para manipular a submissão do formulário
 function manipularSubmissao(evento) {
@@ -168,7 +150,7 @@ return (
        
        <Row className='mt-2 mb-2'>
            <Col md={1}>
-               <Button type="submit" disabled={!temCategorias}>{props.modoEdicao ? "Alterar" : "Confirmar"}</Button>
+               <Button type="submit" >{props.modoEdicao ? "Alterar" : "Confirmar"}</Button>
            </Col>
            <Col md={{ offset: 1 }}>
                <Button onClick={() => {

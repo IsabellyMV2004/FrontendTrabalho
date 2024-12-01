@@ -10,7 +10,7 @@ export default function TabelaCategorias(props) {
     }
 
     function excluirCategoriaFrontEnd(categoria){
-        if(window.confirm("Deseja realmente excluir a categoria " + categoria.descricao)){
+        if(window.confirm("Deseja realmente excluir o categoria " + categoria.descricao)){
             //abordagem utilizando a sintaxe permitida da linguagem
             excluirCategoria(categoria).then((resposta)=>{
                 if(resposta.status){
@@ -81,7 +81,7 @@ export default function TabelaCategorias(props) {
                         }
                     </tbody>
                 </Table>
-                <p>Quatidade de categorias cadastradas: {props.listaDeCategorias.length}</p>
+                <p>Quatidade de categorias cadastrados: {props.listaDeCategorias.length}</p>
             </Container>
         </>
     );

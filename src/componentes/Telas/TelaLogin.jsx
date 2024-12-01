@@ -86,7 +86,7 @@ export default function TelaLogin() {
         // Verifica se o usuário e senha existem na lista de usuários
         const usuarioEncontrado = usuarios.find(
             (u) =>
-                u.email === usuarioDigitado && // Verifica o email
+                u.nome === usuarioDigitado && // Verifica o email
                 u.senha === senhaDigitada     // Verifica a senha
         );
 

@@ -23,10 +23,10 @@ export default function TelaCadastroUsuario(props) {
         endereco: "",
         privilegios: {},
     });
-
+    
     useEffect(() => {
         // Verifica se o usuário logado tem nível básico
-        if (usuario.privilegios?.descricao === "basico") {
+        if (usuario.privilegios.descricao === "basico") {
             alert("Acesso negado. Você não tem permissão para acessar esta página.");
             navigate("/"); // Redireciona para a página inicial ou de login
             return;
@@ -36,7 +36,7 @@ export default function TelaCadastroUsuario(props) {
         consultarUsuario().then((lista) => {
             setListaDeUsuarios(lista);
         });
-    }, [usuario, navigate]); // O efeito é executado ao carregar o componente e quando o usuário logado muda
+    }, []); // O efeito é executado ao carregar o componente e quando o usuário logado muda
 
     return (
         <div>

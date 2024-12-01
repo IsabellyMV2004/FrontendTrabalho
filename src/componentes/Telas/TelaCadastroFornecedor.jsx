@@ -17,9 +17,7 @@ export default function TelaCadastroFornecedor(props) {
         senha:"",
         nome:"",
         telefone:"",
-        endereco:"",
-        privilegios: {}
-
+        endereco:""
     });
 
     useEffect(()=>{
