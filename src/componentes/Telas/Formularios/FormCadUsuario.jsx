@@ -1,4 +1,4 @@
-/*import { Button, Spinner, Col, Form, InputGroup,
+import { Button, Spinner, Col, Form, InputGroup,
          Row
  } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -147,6 +147,7 @@ export default function FormCadUsuarios(props) {
                     </Form.Group>
                 </Row>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Senha</Form.Label>
                 <Form.Control 
                         type="password" 
                         placeholder="Password"
@@ -223,8 +224,8 @@ export default function FormCadUsuarios(props) {
             <Toaster position="top-right"/>
         </Form>
     );
-}*/
-
+}
+/*
 import { Button, Spinner, Col, Form, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { consultarPrivilegio } from '../../../servicos/servicoPrivilegio';
@@ -240,7 +241,7 @@ export default function FormCadUsuarios(props) {
             nome: "",
             telefone: "",
             endereco: "",
-            privilegio: { codigo: "" },
+            privilegio: {},
         }
     );
     const [formValidado, setFormValidado] = useState(false);
@@ -424,4 +425,4 @@ export default function FormCadUsuarios(props) {
             <Toaster position="top-right" />
         </Form>
     );
-}
+}*/

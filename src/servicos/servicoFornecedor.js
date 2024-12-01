@@ -13,7 +13,7 @@ export async function gravarFornecedor(fornecedor){
 }
 
 export async function alterarFornecedor(fornecedor){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + fornecedor.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarFornecedor(fornecedor){
 
 export async function excluirFornecedor(fornecedor){
     const resposta = await fetch(urlBase + "/" + fornecedor.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;

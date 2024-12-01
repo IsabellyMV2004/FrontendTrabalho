@@ -13,7 +13,7 @@ export async function gravarUsuario(usuario){
 }
 
 export async function alterarUsuario(usuario){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + usuario.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarUsuario(usuario){
 
 export async function excluirUsuario(usuario){
     const resposta = await fetch(urlBase + "/" + usuario.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;

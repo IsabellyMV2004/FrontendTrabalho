@@ -13,7 +13,7 @@ export async function gravarPrivilegio(privilegio){
 }
 
 export async function alterarPrivilegio(privilegio){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + privilegio.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarPrivilegio(privilegio){
 
 export async function excluirPrivilegio(privilegio){
     const resposta = await fetch(urlBase + "/" + privilegio.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;

@@ -13,7 +13,7 @@ export async function gravarCliente(cliente){
 }
 
 export async function alterarCliente(cliente){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + cliente.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarCliente(cliente){
 
 export async function excluirCliente(cliente){
     const resposta = await fetch(urlBase + "/" + cliente.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;
