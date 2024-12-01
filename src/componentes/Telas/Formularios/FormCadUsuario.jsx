@@ -153,7 +153,7 @@ export default function FormCadUsuarios(props) {
                         placeholder="Password"
                         id="senha"
                         name="senha"
-                        ref={senha}
+                        ref={usuario.senha}
                          />
                 </Form.Group>
                 <Row className="mb-4">

@@ -66,7 +66,7 @@ export default function TelaLogin() {
 import { Container, Form, Button } from "react-bootstrap";
 import { useContext, useRef, useState } from "react";
 import { ContextoUsuario } from "../../App";
-import { usuarios } from "../../dados/usuarios"; // Importe a lista de usuários
+import { usuarios } from "../../dados/mockUsuarios"; // Importe a lista de usuários
 import { useNavigate } from "react-router-dom"; // Para redirecionamento
 
 export default function TelaLogin() {
