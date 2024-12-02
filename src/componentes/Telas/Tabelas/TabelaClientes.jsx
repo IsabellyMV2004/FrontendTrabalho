@@ -11,6 +11,7 @@ export default function TabelaClientes(props) {
 
     function excluirClienteFrontEnd(cliente) {
         if (cliente && cliente.codigo) {
+            console.log("Excluindo cliente com código:", cliente.codigo); // Adicionando log
             if (window.confirm("Deseja realmente excluir o cliente " + cliente.nome)) {
                 excluirCliente(cliente).then((resposta) => {
                     if (resposta.status) {
@@ -20,12 +21,16 @@ export default function TabelaClientes(props) {
                     } else {
                         window.alert("Não foi possível excluir o cliente: " + resposta.mensagem);
                     }
+                }).catch((erro) => {
+                    window.alert("Erro ao excluir cliente: " + erro.message);
                 });
             }
         } else {
             window.alert("Cliente ou código inválido.");
         }
     }
+    
+    
     
 
     return (
