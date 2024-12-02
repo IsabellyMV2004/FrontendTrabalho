@@ -2,7 +2,6 @@ import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { consultarCategoria } from '../../../servicos/servicoCategoria';
 import { alterarCliente, gravarCliente } from '../../../servicos/servicoCliente';
 
 import toast, {Toaster} from 'react-hot-toast';
