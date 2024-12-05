@@ -429,9 +429,9 @@ export default function FormCadUsuarios(props) {
                     >
                         {
                             temPrivilegios ?
-                                privilegios.map((privilegio) => (
-                                    <option key={privilegio.codigo} value={privilegio.codigo}>
-                                        {privilegio.nome}
+                                privilegios.map((privilegios) => (
+                                    <option key={privilegios.codigo} value={privilegios.codigo}>
+                                        {privilegios.descricao}
                                     </option>
                                 ))
                                 : <option>Carregando...</option>
