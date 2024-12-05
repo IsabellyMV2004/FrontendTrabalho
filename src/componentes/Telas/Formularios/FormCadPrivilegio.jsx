@@ -1,4 +1,4 @@
-import { Button, Spinner, Col, Form, InputGroup,
+/*import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -114,4 +114,62 @@ return (
        <Toaster position="top-right"/>
    </Form>
 );
+}*/
+
+import { useDispatch } from "react-redux";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { addPrivilegio, updatePrivilegio } from "../../../redux/privilegioSlice";
+
+export default function FormCadPrivilegios({
+  modoEdicao,
+  privilegioSelecionado,
+  setExibirTabela,
+}) {
+  const dispatch = useDispatch();
+  const [privilegio, setPrivilegio] = useState(privilegioSelecionado);
+
+  function manipularMudanca(evento) {
+    const { name, value } = evento.target;
+    setPrivilegio((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function manipularSubmissao(evento) {
+    evento.preventDefault();
+    if (modoEdicao) {
+      dispatch(updatePrivilegio(privilegio));
+    } else {
+      dispatch(addPrivilegio(privilegio));
+    }
+    setExibirTabela(true);
+  }
+
+  return (
+    <Form onSubmit={manipularSubmissao}>
+      <Row>
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>Código</Form.Label>
+            <Form.Control
+              name="codigo"
+              value={privilegio.codigo}
+              onChange={manipularMudanca}
+              disabled={modoEdicao}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>Descrição</Form.Label>
+            <Form.Control
+              name="descricao"
+              value={privilegio.descricao}
+              onChange={manipularMudanca}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Button type="submit">{modoEdicao ? "Alterar" : "Adicionar"}</Button>{" "}
+      <Button onClick={() => setExibirTabela(true)}>Cancelar</Button>
+    </Form>
+  );
 }

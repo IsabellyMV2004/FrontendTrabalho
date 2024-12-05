@@ -1,4 +1,4 @@
-import { Button, Container, Table } from "react-bootstrap";
+/*import { Button, Container, Table } from "react-bootstrap";
 import { excluirPrivilegio } from "../../../servicos/servicoPrivilegio";
 
 export default function TabelaPrivilegios(props) {
@@ -23,16 +23,6 @@ export default function TabelaPrivilegios(props) {
                     window.alert("Não foi possivel excluir o privilegio: "+ resposta.mensagem);
                 }
             })
-            
-
-            //abordagem elementar            
-            /*let novaLista= []
-            for (let i=0; i < props.listaDePrivilegios.length; i++){
-                if (props.listaDePrivilegios[i].codigo != privilegio.codigo){
-                    novaLista.push(props.listaDePrivilegios[i])
-                }
-            }
-            props.setListaDePrivilegios(novaLista);*/
         }
     }
 
@@ -85,4 +75,61 @@ export default function TabelaPrivilegios(props) {
             </Container>
         </>
     );
+}*/
+
+
+
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Container, Table } from "react-bootstrap";
+import { deletePrivilegio } from "../../../redux/privilegioSlice";
+
+export default function TabelaPrivilegios({ setExibirTabela, setModoEdicao, setPrivilegioSelecionado }) {
+  const dispatch = useDispatch();
+  const { listaDePrivilegios } = useSelector((state) => state.privilegios);
+
+  function editarPrivilegio(privilegio) {
+    setModoEdicao(true);
+    setPrivilegioSelecionado(privilegio);
+    setExibirTabela(false);
+  }
+
+  function excluirPrivilegioHandler(privilegio) {
+    if (window.confirm(`Deseja realmente excluir o privilégio ${privilegio.descricao}?`)) {
+      dispatch(deletePrivilegio(privilegio));
+    }
+  }
+
+  return (
+    <Container>
+      <Button className="mb-3" onClick={() => setExibirTabela(false)}>
+        Adicionar
+      </Button>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listaDePrivilegios.map((privilegio) => (
+            <tr key={privilegio.codigo}>
+              <td>{privilegio.codigo}</td>
+              <td>{privilegio.descricao}</td>
+              <td>
+                <Button variant="warning" onClick={() => editarPrivilegio(privilegio)}>
+                  Editar
+                </Button>{" "}
+                <Button variant="danger" onClick={() => excluirPrivilegioHandler(privilegio)}>
+                  Excluir
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <p>Quantidade de privilégios cadastrados: {listaDePrivilegios.length}</p>
+    </Container>
+  );
 }

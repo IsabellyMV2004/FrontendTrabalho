@@ -3,7 +3,7 @@ import produtoReducer from "./produtoReducer";
 import categoriaReducer from "./categoriaReducer";
 import fornecedorReducer from "./fornecedorReducer";
 import clienteReducer from "./clienteReducer";
-import privilegioReducer from "./privilegioReducer";
+import privilegioReducer from "./privilegioSlice";
 import usuarioReducer from "./usuarioReducer";
 
 const store = configureStore({

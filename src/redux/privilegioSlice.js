@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+/*import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { consultarPrivilegio, excluirPrivilegio } from "../servicos/servicoPrivilegio";
 
@@ -101,4 +101,100 @@ const categoriaReducer = createSlice({
     }
 });
 
-export default categoriaReducer.reducer;
+export default categoriaReducer.reducer;*/
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  consultarPrivilegio,
+  excluirPrivilegio,
+  gravarPrivilegio,
+  alterarPrivilegio,
+} from "../servicos/servicoPrivilegio";
+
+// Estados iniciais
+const initialState = {
+  listaDePrivilegios: [],
+  status: "ocioso",
+  mensagem: "",
+};
+
+// Thunks assíncronos
+export const fetchPrivilegios = createAsyncThunk(
+  "privilegios/fetchPrivilegios",
+  async () => {
+    const resultado = await consultarPrivilegio();
+    return resultado;
+  }
+);
+
+export const deletePrivilegio = createAsyncThunk(
+  "privilegios/deletePrivilegio",
+  async (privilegio) => {
+    const resultado = await excluirPrivilegio(privilegio);
+    if (resultado.status) {
+      return privilegio.codigo;
+    }
+    throw new Error(resultado.mensagem);
+  }
+);
+
+export const addPrivilegio = createAsyncThunk(
+  "privilegios/addPrivilegio",
+  async (privilegio) => {
+    const resultado = await gravarPrivilegio(privilegio);
+    if (resultado.status) {
+      return resultado.privilegio;
+    }
+    throw new Error(resultado.mensagem);
+  }
+);
+
+export const updatePrivilegio = createAsyncThunk(
+  "privilegios/updatePrivilegio",
+  async (privilegio) => {
+    const resultado = await alterarPrivilegio(privilegio);
+    if (resultado.status) {
+      return privilegio;
+    }
+    throw new Error(resultado.mensagem);
+  }
+);
+
+// Slice de privilégios
+const privilegioSlice = createSlice({
+  name: "privilegios",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPrivilegios.pending, (state) => {
+        state.status = "pendente";
+      })
+      .addCase(fetchPrivilegios.fulfilled, (state, action) => {
+        state.status = "ocioso";
+        state.listaDePrivilegios = action.payload;
+      })
+      .addCase(fetchPrivilegios.rejected, (state, action) => {
+        state.status = "erro";
+        state.mensagem = action.error.message;
+      })
+      .addCase(deletePrivilegio.fulfilled, (state, action) => {
+        state.listaDePrivilegios = state.listaDePrivilegios.filter(
+          (item) => item.codigo !== action.payload
+        );
+      })
+      .addCase(addPrivilegio.fulfilled, (state, action) => {
+        state.listaDePrivilegios.push(action.payload);
+      })
+      .addCase(updatePrivilegio.fulfilled, (state, action) => {
+        const index = state.listaDePrivilegios.findIndex(
+          (item) => item.codigo === action.payload.codigo
+        );
+        if (index !== -1) {
+          state.listaDePrivilegios[index] = action.payload;
+        }
+      });
+  },
+});
+
+export default privilegioSlice.reducer;
