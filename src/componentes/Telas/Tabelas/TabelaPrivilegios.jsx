@@ -78,14 +78,19 @@ export default function TabelaPrivilegios(props) {
 }*/
 
 
-
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
-import { deletePrivilegio } from "../../../redux/privilegioSlice";
+import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
+import { useEffect } from "react";
+import { fetchPrivilegios, deletePrivilegio } from "../../../redux/privilegioSlice";
 
 export default function TabelaPrivilegios({ setExibirTabela, setModoEdicao, setPrivilegioSelecionado }) {
   const dispatch = useDispatch();
-  const { listaDePrivilegios } = useSelector((state) => state.privilegios);
+  const { listaDePrivilegios, estado, mensagem } = useSelector((state) => state.privilegios);
+
+  useEffect(() => {
+    dispatch(fetchPrivilegios());
+  }, [dispatch]);
 
   function editarPrivilegio(privilegio) {
     setModoEdicao(true);
@@ -97,6 +102,14 @@ export default function TabelaPrivilegios({ setExibirTabela, setModoEdicao, setP
     if (window.confirm(`Deseja realmente excluir o privilégio ${privilegio.descricao}?`)) {
       dispatch(deletePrivilegio(privilegio));
     }
+  }
+
+  if (estado === ESTADO.PENDENTE) {
+    return <p>Carregando privilégios...</p>;
+  }
+
+  if (estado === ESTADO.ERRO) {
+    return <p>Erro: {mensagem}</p>;
   }
 
   return (

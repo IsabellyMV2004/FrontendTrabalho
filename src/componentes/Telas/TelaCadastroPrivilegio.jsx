@@ -1,4 +1,4 @@
-import { Alert } from "react-bootstrap";
+/*import { Alert } from "react-bootstrap";
 import FormCadPrivilegios from "./Formularios/FormCadPrivilegio";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -53,4 +53,43 @@ export default function TelaCadastroPrivilegio(props) {
         </div>
     );
 
+}*/
+
+
+
+import { useState } from "react";
+import TabelaPrivilegios from "./Tabelas/TabelaPrivilegios";
+import FormCadPrivilegios from "./Formularios/FormCadPrivilegio";
+import { useSelector } from "react-redux";
+
+export default function TelaCadastroPrivilegio() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [privilegioSelecionado, setPrivilegioSelecionado] = useState({
+    codigo: "",
+    descricao: "",
+  });
+
+  const { listaDePrivilegios } = useSelector((state) => state.privilegios);
+
+  return (
+    <>
+      {exibirTabela ? (
+        <TabelaPrivilegios
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setPrivilegioSelecionado={setPrivilegioSelecionado}
+        />
+      ) : (
+        <FormCadPrivilegios
+          listaDePrivilegios={listaDePrivilegios}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          privilegioSelecionado={privilegioSelecionado}
+          setPrivilegioSelecionado={setPrivilegioSelecionado}
+        />
+      )}
+    </>
+  );
 }

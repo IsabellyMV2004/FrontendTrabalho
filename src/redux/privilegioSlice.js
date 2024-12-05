@@ -103,60 +103,68 @@ const categoriaReducer = createSlice({
 
 export default categoriaReducer.reducer;*/
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  consultarPrivilegio,
-  excluirPrivilegio,
-  gravarPrivilegio,
-  alterarPrivilegio,
-} from "../servicos/servicoPrivilegio";
 
-// Estados iniciais
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios"; // Para realizar as chamadas à API.
+import ESTADO from "./estados";
+
+// URL base da API
+const API_URL = "https://sua-api.com/privilegios";
+
+// Estado inicial
 const initialState = {
   listaDePrivilegios: [],
-  status: "ocioso",
+  estado: ESTADO.OCIOSO,
   mensagem: "",
 };
 
 // Thunks assíncronos
 export const fetchPrivilegios = createAsyncThunk(
   "privilegios/fetchPrivilegios",
-  async () => {
-    const resultado = await consultarPrivilegio();
-    return resultado;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(API_URL);
+      return response.data; // Retorna a lista de privilégios.
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.mensagem || "Erro ao consultar privilégios.");
+    }
   }
 );
 
 export const deletePrivilegio = createAsyncThunk(
   "privilegios/deletePrivilegio",
-  async (privilegio) => {
-    const resultado = await excluirPrivilegio(privilegio);
-    if (resultado.status) {
-      return privilegio.codigo;
+  async (privilegio, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${API_URL}/${privilegio.codigo}`);
+      return privilegio.codigo; // Retorna o código do privilégio excluído.
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.mensagem || "Erro ao excluir privilégio.");
     }
-    throw new Error(resultado.mensagem);
   }
 );
 
 export const addPrivilegio = createAsyncThunk(
   "privilegios/addPrivilegio",
-  async (privilegio) => {
-    const resultado = await gravarPrivilegio(privilegio);
-    if (resultado.status) {
-      return resultado.privilegio;
+  async (privilegio, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(API_URL, privilegio);
+      return response.data; // Retorna o privilégio cadastrado.
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.mensagem || "Erro ao adicionar privilégio.");
     }
-    throw new Error(resultado.mensagem);
   }
 );
 
 export const updatePrivilegio = createAsyncThunk(
   "privilegios/updatePrivilegio",
-  async (privilegio) => {
-    const resultado = await alterarPrivilegio(privilegio);
-    if (resultado.status) {
-      return privilegio;
+  async (privilegio, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${API_URL}/${privilegio.codigo}`, privilegio);
+      return response.data; // Retorna o privilégio atualizado.
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.mensagem || "Erro ao alterar privilégio.");
     }
-    throw new Error(resultado.mensagem);
   }
 );
 
@@ -167,25 +175,37 @@ const privilegioSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch privilégios
       .addCase(fetchPrivilegios.pending, (state) => {
-        state.status = "pendente";
+        state.estado = ESTADO.PENDENTE;
       })
       .addCase(fetchPrivilegios.fulfilled, (state, action) => {
-        state.status = "ocioso";
+        state.estado = ESTADO.OCIOSO;
         state.listaDePrivilegios = action.payload;
       })
       .addCase(fetchPrivilegios.rejected, (state, action) => {
-        state.status = "erro";
-        state.mensagem = action.error.message;
+        state.estado = ESTADO.ERRO;
+        state.mensagem = action.payload;
       })
+      // Delete privilégio
       .addCase(deletePrivilegio.fulfilled, (state, action) => {
         state.listaDePrivilegios = state.listaDePrivilegios.filter(
           (item) => item.codigo !== action.payload
         );
       })
+      .addCase(deletePrivilegio.rejected, (state, action) => {
+        state.estado = ESTADO.ERRO;
+        state.mensagem = action.payload;
+      })
+      // Add privilégio
       .addCase(addPrivilegio.fulfilled, (state, action) => {
         state.listaDePrivilegios.push(action.payload);
       })
+      .addCase(addPrivilegio.rejected, (state, action) => {
+        state.estado = ESTADO.ERRO;
+        state.mensagem = action.payload;
+      })
+      // Update privilégio
       .addCase(updatePrivilegio.fulfilled, (state, action) => {
         const index = state.listaDePrivilegios.findIndex(
           (item) => item.codigo === action.payload.codigo
@@ -193,6 +213,10 @@ const privilegioSlice = createSlice({
         if (index !== -1) {
           state.listaDePrivilegios[index] = action.payload;
         }
+      })
+      .addCase(updatePrivilegio.rejected, (state, action) => {
+        state.estado = ESTADO.ERRO;
+        state.mensagem = action.payload;
       });
   },
 });

@@ -118,6 +118,7 @@ return (
 
 import { useDispatch } from "react-redux";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { useState } from 'react';
 import { addPrivilegio, updatePrivilegio } from "../../../redux/privilegioSlice";
 
 export default function FormCadPrivilegios({
