@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import produtoReducer from "./produtoReducer";
-import categoriaReducer from "./categoriaReducer";
-import fornecedorReducer from "./fornecedorReducer";
-import clienteReducer from "./clienteReducer";
+import produtoReducer from "./produtoSlice";
+import categoriaReducer from "./categoriaSlice";
+import fornecedorReducer from "./fornecedorSlice";
+import clienteReducer from "./clienteSlice";
 import privilegioReducer from "./privilegioSlice";
-import usuarioReducer from "./usuarioReducer";
+import usuarioReducer from "./usuarioSlice";
 
 const store = configureStore({
     reducer:{

@@ -206,7 +206,7 @@ export default function FormCadFornecedores({
                    id="codigo"
                    name="codigo"
                    value={fornecedor.codigo}
-                   disabled={props.modoEdicao}
+                   disabled={modoEdicao}
                    onChange={manipularMudanca}
                />
                <Form.Control.Feedback type='invalid'>Por favor, informe o código do fornecedor!</Form.Control.Feedback>

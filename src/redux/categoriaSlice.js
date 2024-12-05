@@ -130,8 +130,8 @@ export const fetchCategorias = createAsyncThunk(
   }
 );
 
-export const deletePrivilegio = createAsyncThunk(
-  "categorias/deletePrivilegio",
+export const deleteCategoria = createAsyncThunk(
+  "categorias/deleteCategoria",
   async (categoria, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/${categoria.codigo}`);
@@ -142,8 +142,8 @@ export const deletePrivilegio = createAsyncThunk(
   }
 );
 
-export const addPrivilegio = createAsyncThunk(
-  "categorias/addPrivilegio",
+export const addCategoria = createAsyncThunk(
+  "categorias/addCategoria",
   async (categoria, { rejectWithValue }) => {
     try {
       const response = await axios.post(API_URL, categoria);
@@ -154,8 +154,8 @@ export const addPrivilegio = createAsyncThunk(
   }
 );
 
-export const updatePrivilegio = createAsyncThunk(
-  "categorias/updatePrivilegio",
+export const updateCategoria = createAsyncThunk(
+  "categorias/updateCategoria",
   async (categoria, { rejectWithValue }) => {
     try {
       const response = await axios.put(`${API_URL}/${categoria.codigo}`, categoria);
@@ -190,28 +190,28 @@ const categoriaSlice = createSlice({
         state.mensagem = action.payload;
       })
       // Delete categoria
-      .addCase(deletePrivilegio.fulfilled, (state, action) => {
+      .addCase(deleteCategoria.fulfilled, (state, action) => {
         state.listaDeCategorias
  = state.listaDeCategorias
 .filter(
           (item) => item.codigo !== action.payload
         );
       })
-      .addCase(deletePrivilegio.rejected, (state, action) => {
+      .addCase(deleteCategoria.rejected, (state, action) => {
         state.estado = ESTADO.ERRO;
         state.mensagem = action.payload;
       })
       // Add categoria
-      .addCase(addPrivilegio.fulfilled, (state, action) => {
+      .addCase(addCategoria.fulfilled, (state, action) => {
         state.listaDeCategorias
 .push(action.payload);
       })
-      .addCase(addPrivilegio.rejected, (state, action) => {
+      .addCase(addCategoria.rejected, (state, action) => {
         state.estado = ESTADO.ERRO;
         state.mensagem = action.payload;
       })
       // Update categoria
-      .addCase(updatePrivilegio.fulfilled, (state, action) => {
+      .addCase(updateCategoria.fulfilled, (state, action) => {
         const index = state.listaDeCategorias
 .findIndex(
           (item) => item.codigo === action.payload.codigo
@@ -221,7 +221,7 @@ const categoriaSlice = createSlice({
     [index] = action.payload;
         }
       })
-      .addCase(updatePrivilegio.rejected, (state, action) => {
+      .addCase(updateCategoria.rejected, (state, action) => {
         state.estado = ESTADO.ERRO;
         state.mensagem = action.payload;
       });

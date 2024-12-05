@@ -204,7 +204,7 @@ export default function FormCadClientes({
                    id="codigo"
                    name="codigo"
                    value={cliente.codigo}
-                   disabled={props.modoEdicao}
+                   disabled={modoEdicao}
                    onChange={manipularMudanca}
                />
                <Form.Control.Feedback type='invalid'>Por favor, informe o código do cliente!</Form.Control.Feedback>

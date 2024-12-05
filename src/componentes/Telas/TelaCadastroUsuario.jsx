@@ -69,11 +69,12 @@ export default function TelaCadastroUsuario(props) {
 }*/
 
 
-
-import { useState } from "react";
 import TabelaUsuarios from "./Tabelas/TabelaUsuarios";
 import FormCadUsuarios from "./Formularios/FormCadUsuario";
 import { useSelector } from "react-redux";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Para redirecionamento
+import { ContextoUsuario } from "../../App"; // Para acessar o usuário logado
 
 export default function TelaCadastroUsuario() {
   const [exibirTabela, setExibirTabela] = useState(true);
@@ -88,19 +89,19 @@ export default function TelaCadastroUsuario() {
     privilegios: {}
   });
 
-  const { listaDeUsuarios } = useSelector((state) => 
-    {
-        // Verifica se o usuário logado tem nível básico
-        if (usuario.privilegios.descricao === "basico") {
-            alert("Acesso negado. Você não tem permissão para acessar esta página.");
-            navigate("/"); // Redireciona para a página inicial ou de login
-            return;
-        }
-        else
-        {
-            state.usuarios
-        }
-    });
+  const { usuario } = useContext(ContextoUsuario); // Obtem o usuário logado
+  const navigate = useNavigate(); // Para redirecionar usuários não autorizados
+
+  // Obtém a lista de usuários diretamente do estado global
+  const listaDeUsuarios = useSelector((state) => state.usuarios.listaDeUsuarios);
+
+  // Verifica as permissões do usuário ao carregar a tela
+  useEffect(() => {
+    if (usuario.privilegios.descricao === "basico") {
+      alert("Acesso negado. Você não tem permissão para acessar esta página.");
+      navigate("/"); // Redireciona para a página inicial ou de login
+    }
+  }, [usuario, navigate]);
 
   return (
     <>
@@ -112,7 +113,7 @@ export default function TelaCadastroUsuario() {
         />
       ) : (
         <FormCadUsuarios
-          listaDeUsuarios={listaDeUsuarios}
+          listaDeUsuarios={listaDeUsuarios || []} // Certifica-se de que será pelo menos um array vazio
           setExibirTabela={setExibirTabela}
           modoEdicao={modoEdicao}
           setModoEdicao={setModoEdicao}
@@ -123,5 +124,3 @@ export default function TelaCadastroUsuario() {
     </>
   );
 }
-
-

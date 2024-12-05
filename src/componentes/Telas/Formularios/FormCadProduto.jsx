@@ -260,7 +260,7 @@ return (
 import { Button, Spinner, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProdutos, addProduto, updateProduto } from '../../../slices/produtoSlice';
+import { fetchProdutos, addProduto, updateProduto } from '../../../redux/produtoSlice';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function FormCadProdutos(props) {

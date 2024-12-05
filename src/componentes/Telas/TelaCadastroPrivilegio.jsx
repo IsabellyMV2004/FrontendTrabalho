@@ -89,7 +89,7 @@ export default function TelaCadastroPrivilegio() {
           privilegioSelecionado={privilegioSelecionado}
           setPrivilegioSelecionado={setPrivilegioSelecionado}
         />
-      )}
+      )} 
     </>
   );
 }

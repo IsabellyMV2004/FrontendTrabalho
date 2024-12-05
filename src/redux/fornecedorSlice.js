@@ -112,14 +112,14 @@ const API_URL = "https://sua-api.com/fornecedores";
 
 // Estado inicial
 const initialState = {
-  listaDeForncedores: [],
+  listaDeFornecedores: [],
   estado: ESTADO.OCIOSO,
   mensagem: "",
 };
 
 // Thunks assíncronos
-export const fetchForncedores = createAsyncThunk(
-  "fornecedores/fetchForncedores",
+export const fetchFornecedores = createAsyncThunk(
+  "fornecedores/fetchFornecedores",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(API_URL);
@@ -174,20 +174,20 @@ const fornecedorSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Fetch fornecedores
-      .addCase(fetchForncedores.pending, (state) => {
+      .addCase(fetchFornecedores.pending, (state) => {
         state.estado = ESTADO.PENDENTE;
       })
-      .addCase(fetchForncedores.fulfilled, (state, action) => {
+      .addCase(fetchFornecedores.fulfilled, (state, action) => {
         state.estado = ESTADO.OCIOSO;
-        state.listaDeForncedores = action.payload;
+        state.listaDeFornecedores = action.payload;
       })
-      .addCase(fetchForncedores.rejected, (state, action) => {
+      .addCase(fetchFornecedores.rejected, (state, action) => {
         state.estado = ESTADO.ERRO;
         state.mensagem = action.payload;
       })
       // Delete fornecedor
       .addCase(deleteFornecedor.fulfilled, (state, action) => {
-        state.listaDeForncedores = state.listaDeForncedores.filter(
+        state.listaDeFornecedores = state.listaDeFornecedores.filter(
           (item) => item.codigo !== action.payload
         );
       })
@@ -197,7 +197,7 @@ const fornecedorSlice = createSlice({
       })
       // Add fornecedor
       .addCase(addFornecedor.fulfilled, (state, action) => {
-        state.listaDeForncedores.push(action.payload);
+        state.listaDeFornecedores.push(action.payload);
       })
       .addCase(addFornecedor.rejected, (state, action) => {
         state.estado = ESTADO.ERRO;
@@ -205,11 +205,11 @@ const fornecedorSlice = createSlice({
       })
       // Update fornecedor
       .addCase(updateFornecedor.fulfilled, (state, action) => {
-        const index = state.listaDeForncedores.findIndex(
+        const index = state.listaDeFornecedores.findIndex(
           (item) => item.codigo === action.payload.codigo
         );
         if (index !== -1) {
-          state.listaDeForncedores[index] = action.payload;
+          state.listaDeFornecedores[index] = action.payload;
         }
       })
       .addCase(updateFornecedor.rejected, (state, action) => {
