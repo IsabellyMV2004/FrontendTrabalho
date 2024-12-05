@@ -446,18 +446,17 @@ function manipularSubmissao(evento) {
                 </Form.Group>
             </Row>
 
-            <Row className='mt-2 mb-2'>
-                <Col md={1}>
-                    <Button type="submit" disabled={!temPrivilegios}>
-                        {props.modoEdicao ? "Alterar" : "Confirmar"}
-                    </Button>
-                </Col>
-                <Col md={{ offset: 1 }}>
-                    <Button onClick={() => props.setExibirTabela(true)}>Voltar</Button>
-                </Col>
-            </Row>
-
-            <Toaster position="top-right" />
+        <Row className='mt-2 mb-2'>
+           <Col md={1}>
+               <Button type="submit" disabled={!temPrivilegios}>{props.modoEdicao ? "Alterar" : "Confirmar"}</Button>
+           </Col>
+           <Col md={{ offset: 1 }}>
+               <Button onClick={() => {
+                   props.setExibirTabela(true);
+               }}>Voltar</Button>
+           </Col>
+       </Row>
+        <Toaster position="top-right" />
         </Form>
     );
 }
