@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirProduto } from "../../../servicos/servicoProduto";
 
 export default function TabelaProdutos(props) {
@@ -88,10 +88,15 @@ export default function TabelaProdutos(props) {
             </Container>
         </>
     );
-}*/
+}
 
 
 
+
+
+
+// PARTE DE REDUX
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -182,7 +187,7 @@ export default function TabelaProdutos({ setExibirTabela, setModoEdicao, setProd
       <p>Quantidade de produtos cadastrados: {listaDeProdutos.length}</p>
     </Container>
   );
-}
+}*/
 
 
 

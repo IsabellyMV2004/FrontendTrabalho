@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadCategorias from "./Formularios/FormCadCategoria";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -53,9 +53,12 @@ export default function TelaCadastroCategoria(props) {
         </div>
     );
 
-}*/
+}
 
 
+
+// PARTE DE REDUX
+/*
 import { useState } from "react";
 import TabelaCategorias from "./Tabelas/TabelaCategorias";
 import FormCadCategorias from "./Formularios/FormCadCategoria";
@@ -91,4 +94,4 @@ export default function TelaCadastroCategoria() {
       )}
     </>
   );
-}
+}*/

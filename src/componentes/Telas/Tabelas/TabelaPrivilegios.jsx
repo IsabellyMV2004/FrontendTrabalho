@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirPrivilegio } from "../../../servicos/servicoPrivilegio";
 
 export default function TabelaPrivilegios(props) {
@@ -75,9 +75,14 @@ export default function TabelaPrivilegios(props) {
             </Container>
         </>
     );
-}*/   
+}  
 
 
+
+
+
+// PARTE DE REDUX
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -154,4 +159,4 @@ export default function TabelaPrivilegios({ setExibirTabela, setModoEdicao, setP
       <p>Quantidade de privilégios cadastrados: {listaDePrivilegios.length}</p>
     </Container>
   );
-}
+}*/

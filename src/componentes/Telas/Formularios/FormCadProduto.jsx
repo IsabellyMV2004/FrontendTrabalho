@@ -1,4 +1,4 @@
-/*import { Button, Spinner, Col, Form, InputGroup,
+import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -252,11 +252,12 @@ return (
        <Toaster position="top-right"/>
    </Form>
 );
-}*/
+}
 
 
 
-
+// PARTE DE REDUX
+/*
 import { Button, Spinner, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -461,4 +462,4 @@ export default function FormCadProdutos(props) {
             <Toaster position="top-right" />
         </Form>
     );
-}
+}*/

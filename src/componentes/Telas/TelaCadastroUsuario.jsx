@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadUsuarios from "./Formularios/FormCadUsuario";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState, useContext } from "react";
@@ -66,9 +66,15 @@ export default function TelaCadastroUsuario(props) {
             </Pagina>
         </div>
     );
-}*/
+}
 
 
+
+
+
+
+// PARTE DE REDUX
+/*
 import TabelaUsuarios from "./Tabelas/TabelaUsuarios";
 import FormCadUsuarios from "./Formularios/FormCadUsuario";
 import { useSelector } from "react-redux";
@@ -123,4 +129,4 @@ export default function TelaCadastroUsuario() {
       )}
     </>
   );
-}
+}*/

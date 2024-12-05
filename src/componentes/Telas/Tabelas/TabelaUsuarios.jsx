@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirUsuario } from "../../../servicos/servicoUsuario";
 
 export default function TabelaUsuarios(props) {
@@ -81,11 +81,13 @@ export default function TabelaUsuarios(props) {
             </Container>
         </>
     );
-}*/
+}
 
  
 
 
+// PARTE DE REDUX
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -168,4 +170,4 @@ export default function TabelaUsuarios({ setExibirTabela, setModoEdicao, setUsua
       <p>Quantidade de usuarios cadastrados: {listaDeUsuarios.length}</p>
     </Container>
   );
-}
+}*/

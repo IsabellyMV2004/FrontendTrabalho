@@ -108,7 +108,7 @@ import axios from "axios"; // Para realizar as chamadas à API.
 import ESTADO from "./estados";
 
 // URL base da API
-const API_URL = "https://sua-api.com/fornecedores";
+const API_URL = "https://backend-trabalho.vercel.app/fornecedores";
 
 // Estado inicial
 const initialState = {

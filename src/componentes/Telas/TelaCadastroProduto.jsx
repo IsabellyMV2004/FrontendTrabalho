@@ -62,6 +62,11 @@ export default function TelaCadastroProduto(props) {
 }*/
 
 
+
+
+
+// PARTE DE REDUX
+/*
 import { useState } from "react";
 import TabelaProdutos from "./Tabelas/TabelaProdutos";
 import FormCadProdutos from "./Formularios/FormCadProduto";
@@ -103,6 +108,6 @@ export default function TelaCadastroProduto() {
       )}
     </>
   );
-}
+}*/
 
 

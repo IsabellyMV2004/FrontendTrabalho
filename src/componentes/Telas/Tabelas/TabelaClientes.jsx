@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirCliente } from "../../../servicos/servicoCliente";
 
 export default function TabelaClientes(props) {
@@ -88,10 +88,12 @@ export default function TabelaClientes(props) {
             </Container>
         </>
     );
-}*/
+}
 
 
 
+// PARTE DE REDUX
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -175,7 +177,7 @@ export default function TabelaClientes({ setExibirTabela, setModoEdicao, setClie
       <p>Quantidade de clientes cadastrados: {listaDeClientes.length}</p>
     </Container>
   );
-}
+}*/
 
 
 

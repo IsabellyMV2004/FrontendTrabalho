@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadPrivilegios from "./Formularios/FormCadPrivilegio";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -53,10 +53,13 @@ export default function TelaCadastroPrivilegio(props) {
         </div>
     );
 
-}*/
+}
 
 
 
+
+// PARTE DE REDUX
+/*
 import { useState } from "react";
 import TabelaPrivilegios from "./Tabelas/TabelaPrivilegios";
 import FormCadPrivilegios from "./Formularios/FormCadPrivilegio";
@@ -92,4 +95,4 @@ export default function TelaCadastroPrivilegio() {
       )} 
     </>
   );
-}
+}*/

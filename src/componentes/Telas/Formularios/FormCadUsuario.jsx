@@ -1,4 +1,4 @@
-/*import { Button, Spinner, Col, Form, Row } from 'react-bootstrap';
+import { Button, Spinner, Col, Form, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { consultarPrivilegio } from '../../../servicos/servicoPrivilegio';
 import { alterarUsuario, gravarUsuario } from '../../../servicos/servicoUsuario';
@@ -230,10 +230,14 @@ function manipularSubmissao(evento) {
         <Toaster position="top-right" />
         </Form>
     );
-}*/
+}
 
 
 
+
+
+// PARTE DE REDUX
+/*
 import { Button, Spinner, Col, Form, Row } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -330,7 +334,6 @@ export default function FormCadUsuarios(props) {
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
-      {/* Campos adicionais: nome, email, senha, telefone, endereço */}
       <Row className="mb-4">
         <Form.Group as={Col} md="12">
           <Form.Label>Privilegio:</Form.Label>
@@ -371,4 +374,4 @@ export default function FormCadUsuarios(props) {
       <Toaster position="top-right" />
     </Form>
   );
-}
+}*/

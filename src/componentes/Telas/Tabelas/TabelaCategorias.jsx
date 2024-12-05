@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirCategoria } from "../../../servicos/servicoCategoria";
 
 export default function TabelaCategorias(props) {
@@ -76,9 +76,12 @@ export default function TabelaCategorias(props) {
             </Container>
         </>
     );
-}*/
+}
 
 
+
+// PARTE DE REDUX
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -106,7 +109,7 @@ export default function TabelaCategorias({ setExibirTabela, setModoEdicao, setCa
   }
 
   if (estado === ESTADO.PENDENTE) {
-    return <p>Carregando privilégios...</p>;
+    return <p>Carregando categorias...</p>;
   }
 
   if (estado === ESTADO.ERRO) {
@@ -153,9 +156,9 @@ export default function TabelaCategorias({ setExibirTabela, setModoEdicao, setCa
           ))}
         </tbody>
       </Table>
-      <p>Quantidade de privilégios cadastrados: {listaDeCategorias.length}</p>
+      <p>Quantidade de categorias cadastrados: {listaDeCategorias.length}</p>
     </Container>
   );
 }
-
+*/
 
