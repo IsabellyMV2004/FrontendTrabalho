@@ -1,4 +1,4 @@
-import { Button, Spinner, Col, Form, InputGroup,
+/*import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -252,4 +252,213 @@ return (
        <Toaster position="top-right"/>
    </Form>
 );
+}*/
+
+
+
+
+import { Button, Spinner, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProdutos, addProduto, updateProduto } from '../../../slices/produtoSlice';
+import toast, { Toaster } from 'react-hot-toast';
+
+export default function FormCadProdutos(props) {
+    const dispatch = useDispatch();
+    const { listaDeProdutos, estado } = useSelector((state) => state.produtos);
+
+    const [produto, setProduto] = useState(
+        props.produtoSelecionado || {
+            codigo: '',
+            descricao: '',
+            precoCusto: '',
+            precoVenda: '',
+            qtdEstoque: '',
+            urlImagem: '',
+            dataValidade: '',
+            categoria: {},
+        }
+    );
+
+    const [formValidado, setFormValidado] = useState(false);
+    const [categorias, setCategorias] = useState([]);
+    const [temCategorias, setTemCategorias] = useState(false);
+
+    useEffect(() => {
+        // Simular a consulta às categorias
+        dispatch(fetchProdutos()).then((resultado) => {
+            if (resultado.meta.requestStatus === 'fulfilled') {
+                setCategorias(resultado.payload);
+                setTemCategorias(true);
+            } else {
+                toast.error('Não foi possível carregar as categorias.');
+            }
+        });
+    }, [dispatch]);
+
+    function selecionarCategoria(evento) {
+        setProduto({
+            ...produto,
+            categoria: { codigo: evento.currentTarget.value },
+        });
+    }
+
+    function manipularSubmissao(evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+        const form = evento.currentTarget;
+
+        if (form.checkValidity()) {
+            const produtoFormatado = {
+                ...produto,
+                dataValidade: new Date(produto.dataValidade).toISOString(),
+            };
+
+            if (props.modoEdicao) {
+                // Atualizar produto
+                dispatch(updateProduto(produtoFormatado)).then((resultado) => {
+                    if (resultado.meta.requestStatus === 'fulfilled') {
+                        toast.success('Produto atualizado com sucesso!');
+                        props.setExibirTabela(true);
+                    } else {
+                        toast.error('Erro ao atualizar produto.');
+                    }
+                });
+            } else {
+                // Adicionar produto
+                dispatch(addProduto(produtoFormatado)).then((resultado) => {
+                    if (resultado.meta.requestStatus === 'fulfilled') {
+                        toast.success('Produto cadastrado com sucesso!');
+                        props.setExibirTabela(true);
+                    } else {
+                        toast.error('Erro ao cadastrar produto.');
+                    }
+                });
+            }
+        } else {
+            setFormValidado(true);
+        }
+    }
+
+    function manipularMudanca(evento) {
+        const { name, value } = evento.target;
+        setProduto({ ...produto, [name]: value });
+    }
+
+    return (
+        <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
+            <Row className="mb-4">
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Código</Form.Label>
+                    <Form.Control
+                        required
+                        type="text"
+                        name="codigo"
+                        value={produto.codigo}
+                        disabled={props.modoEdicao}
+                        onChange={manipularMudanca}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Por favor, informe o código do produto!
+                    </Form.Control.Feedback>
+                </Form.Group>
+            </Row>
+            <Row className="mb-4">
+                <Form.Group as={Col} md="12">
+                    <Form.Label>Descrição</Form.Label>
+                    <Form.Control
+                        required
+                        type="text"
+                        name="descricao"
+                        value={produto.descricao}
+                        onChange={manipularMudanca}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Por favor, informe a descrição do produto!
+                    </Form.Control.Feedback>
+                </Form.Group>
+            </Row>
+            <Row className="mb-4">
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Preço de Custo</Form.Label>
+                    <InputGroup>
+                        <InputGroup.Text>R$</InputGroup.Text>
+                        <Form.Control
+                            required
+                            type="number"
+                            name="precoCusto"
+                            value={produto.precoCusto}
+                            onChange={manipularMudanca}
+                        />
+                    </InputGroup>
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Preço de Venda</Form.Label>
+                    <InputGroup>
+                        <InputGroup.Text>R$</InputGroup.Text>
+                        <Form.Control
+                            required
+                            type="number"
+                            name="precoVenda"
+                            value={produto.precoVenda}
+                            onChange={manipularMudanca}
+                        />
+                    </InputGroup>
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Quantidade em Estoque</Form.Label>
+                    <Form.Control
+                        required
+                        type="number"
+                        name="qtdEstoque"
+                        value={produto.qtdEstoque}
+                        onChange={manipularMudanca}
+                    />
+                </Form.Group>
+            </Row>
+            <Row className="mb-4">
+                <Form.Group as={Col} md="12">
+                    <Form.Label>URL da Imagem</Form.Label>
+                    <Form.Control
+                        required
+                        type="text"
+                        name="urlImagem"
+                        value={produto.urlImagem}
+                        onChange={manipularMudanca}
+                    />
+                </Form.Group>
+            </Row>
+            <Row className="mb-4">
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Data de Validade</Form.Label>
+                    <Form.Control
+                        required
+                        type="date"
+                        name="dataValidade"
+                        value={produto.dataValidade?.split('T')[0] || ''}
+                        onChange={manipularMudanca}
+                    />
+                </Form.Group>
+                <Form.Group as={Col} md="7">
+                    <Form.Label>Categoria</Form.Label>
+                    <Form.Select onChange={selecionarCategoria}>
+                        {categorias.map((categoria) => (
+                            <option key={categoria.codigo} value={categoria.codigo}>
+                                {categoria.descricao}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+            </Row>
+            <Row className="mt-2">
+                <Col md="2">
+                    <Button type="submit">{props.modoEdicao ? 'Alterar' : 'Confirmar'}</Button>
+                </Col>
+                <Col md="2">
+                    <Button onClick={() => props.setExibirTabela(true)}>Voltar</Button>
+                </Col>
+            </Row>
+            <Toaster position="top-right" />
+        </Form>
+    );
 }

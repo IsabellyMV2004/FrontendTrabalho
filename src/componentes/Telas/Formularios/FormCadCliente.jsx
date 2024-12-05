@@ -161,3 +161,116 @@ return (
    </Form>
 );
 }*/
+
+
+
+import { useDispatch } from "react-redux";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { useState } from 'react';
+import { addCliente, updateCliente } from "../../../redux/clienteSlice";
+
+export default function FormCadClientes({
+  modoEdicao,
+  clienteSelecionado,
+  setExibirTabela,
+}) {
+  const dispatch = useDispatch();
+  const [cliente, setCliente] = useState(clienteSelecionado);
+
+  function manipularMudanca(evento) {
+    const { name, value } = evento.target;
+    setCliente((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function manipularSubmissao(evento) {
+    evento.preventDefault();
+    if (modoEdicao) {
+      dispatch(updateCliente(cliente));
+    } else {
+      dispatch(addCliente(cliente));
+    }
+    setExibirTabela(true);
+  }
+
+  return (
+    <Form onSubmit={manipularSubmissao}>
+      <Row>
+        <Col md={6}>
+            <Form.Group as={Col} md="4">
+               <Form.Label>Código</Form.Label>
+               <Form.Control
+                   required
+                   type="text"
+                   id="codigo"
+                   name="codigo"
+                   value={cliente.codigo}
+                   disabled={props.modoEdicao}
+                   onChange={manipularMudanca}
+               />
+               <Form.Control.Feedback type='invalid'>Por favor, informe o código do cliente!</Form.Control.Feedback>
+           </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group as={Col} md="12">
+               <Form.Label>Nome</Form.Label>
+               <Form.Control
+                   required
+                   type="text"
+                   id="nome"
+                   name="nome"
+                   value={cliente.nome}
+                   onChange={manipularMudanca}
+               />
+               <Form.Control.Feedback type="invalid">Por favor, informe o nome do cliente!</Form.Control.Feedback>
+           </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+            <Form.Group as={Col} md="12">
+               <Form.Label>Endereço</Form.Label>
+               <Form.Control
+                   required
+                   type="text"
+                   id="endereco"
+                   name="endereco"
+                   value={cliente.endereco}
+                   onChange={manipularMudanca}
+               />
+               <Form.Control.Feedback type="invalid">Por favor, informe o endereço do cliente!</Form.Control.Feedback>
+           </Form.Group>
+        </Col>
+        <Col md={6}>
+        <Form.Group as={Col} md="12">
+               <Form.Label>Telefone</Form.Label>
+               <Form.Control
+                   required
+                   type="text"
+                   id="telefone"
+                   name="telefone"
+                   value={cliente.telefone}
+                   onChange={manipularMudanca}
+               />
+               <Form.Control.Feedback type="invalid">Por favor, informe o telefone do cliente!</Form.Control.Feedback>
+           </Form.Group>
+        </Col>
+      </Row>
+      <Row className="mb-4">
+           <Form.Group as={Col} md="12">
+               <Form.Label>Email</Form.Label>
+               <Form.Control
+                   required
+                   type="text"
+                   id="email"
+                   name="email"
+                   value={cliente.email}
+                   onChange={manipularMudanca}
+               />
+               <Form.Control.Feedback type="invalid">Por favor, informe o email do cliente!</Form.Control.Feedback>
+           </Form.Group>
+       </Row>
+      <Button type="submit">{modoEdicao ? "Alterar" : "Adicionar"}</Button>{" "}
+      <Button onClick={() => setExibirTabela(true)}>Cancelar</Button>
+    </Form>
+  );
+}

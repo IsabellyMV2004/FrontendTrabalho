@@ -1,4 +1,4 @@
-import { Button, Spinner, Col, Form, InputGroup,
+/*import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -114,4 +114,66 @@ return (
        <Toaster position="top-right"/>
    </Form>
 );
+}*/
+
+
+
+
+import { useDispatch } from "react-redux";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { useState } from 'react';
+import { addCategoria, updateCategoria } from "../../../redux/categoriaSlice";
+
+export default function FormCadCategorias({
+  modoEdicao,
+  categoriaSelecionado,
+  setExibirTabela,
+}) {
+  const dispatch = useDispatch();
+  const [categoria, setCategoria] = useState(categoriaSelecionado);
+
+  function manipularMudanca(evento) {
+    const { name, value } = evento.target;
+    setCategoria((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function manipularSubmissao(evento) {
+    evento.preventDefault();
+    if (modoEdicao) {
+      dispatch(updateCategoria(categoria));
+    } else {
+      dispatch(addCategoria(categoria));
+    }
+    setExibirTabela(true);
+  }
+
+  return (
+    <Form onSubmit={manipularSubmissao}>
+      <Row>
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>Código</Form.Label>
+            <Form.Control
+              name="codigo"
+              value={categoria.codigo}
+              onChange={manipularMudanca}
+              disabled={modoEdicao}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group>
+            <Form.Label>Descrição</Form.Label>
+            <Form.Control
+              name="descricao"
+              value={categoria.descricao}
+              onChange={manipularMudanca}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Button type="submit">{modoEdicao ? "Alterar" : "Adicionar"}</Button>{" "}
+      <Button onClick={() => setExibirTabela(true)}>Cancelar</Button>
+    </Form>
+  );
 }
