@@ -1,4 +1,4 @@
-import { Alert } from "react-bootstrap";
+/*import { Alert } from "react-bootstrap";
 import FormCadCategorias from "./Formularios/FormCadCategoria";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -53,4 +53,42 @@ export default function TelaCadastroCategoria(props) {
         </div>
     );
 
+}*/
+
+
+import { useState } from "react";
+import TabelaCategorias from "./Tabelas/TabelaCategorias";
+import FormCadCategorias from "./Formularios/FormCadCategoria";
+import { useSelector } from "react-redux";
+
+export default function TelaCadastroCategoria() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [categoriaSelecionado, setCategoriaSelecionado] = useState({
+    codigo: "",
+    descricao: ""
+  });
+
+  const { listaDeCategorias } = useSelector((state) => state.categorias);
+
+  return (
+    <>
+      {exibirTabela ? (
+        <TabelaCategorias
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setCategoriaSelecionado={setCategoriaSelecionado}
+        />
+      ) : (
+        <FormCadCategorias
+          listaDeCategorias={listaDeCategorias}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          categoriaSelecionado={categoriaSelecionado}
+          setCategoriaSelecionado={setCategoriaSelecionado}
+        />
+      )}
+    </>
+  );
 }

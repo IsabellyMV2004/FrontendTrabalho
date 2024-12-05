@@ -1,4 +1,4 @@
-import { Alert } from "react-bootstrap";
+/*import { Alert } from "react-bootstrap";
 import FormCadUsuarios from "./Formularios/FormCadUsuario";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState, useContext } from "react";
@@ -66,4 +66,62 @@ export default function TelaCadastroUsuario(props) {
             </Pagina>
         </div>
     );
+}*/
+
+
+
+import { useState } from "react";
+import TabelaUsuarios from "./Tabelas/TabelaUsuarios";
+import FormCadUsuarios from "./Formularios/FormCadUsuario";
+import { useSelector } from "react-redux";
+
+export default function TelaCadastroUsuario() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [usuarioSelecionado, setUsuarioSelecionado] = useState({
+    codigo: 0,
+    email: "",
+    senha: "",
+    nome: "",
+    telefone: "",
+    endereco: "",
+    privilegios: {}
+  });
+
+  const { listaDeUsuarios } = useSelector((state) => 
+    {
+        // Verifica se o usuário logado tem nível básico
+        if (usuario.privilegios.descricao === "basico") {
+            alert("Acesso negado. Você não tem permissão para acessar esta página.");
+            navigate("/"); // Redireciona para a página inicial ou de login
+            return;
+        }
+        else
+        {
+            state.usuarios
+        }
+    });
+
+  return (
+    <>
+      {exibirTabela ? (
+        <TabelaUsuarios
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setUsuarioSelecionado={setUsuarioSelecionado}
+        />
+      ) : (
+        <FormCadUsuarios
+          listaDeUsuarios={listaDeUsuarios}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          usuarioSelecionado={usuarioSelecionado}
+          setUsuarioSelecionado={setUsuarioSelecionado}
+        />
+      )}
+    </>
+  );
 }
+
+

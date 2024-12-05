@@ -57,63 +57,41 @@ export default function TelaCadastroCliente(props) {
 
 }*/
 
-import { Table, Button } from "react-bootstrap";
+import { useState } from "react";
+import TabelaClientes from "./Tabelas/TabelaClientes";
+import FormCadClientes from "./Formularios/FormCadCliente";
+import { useSelector } from "react-redux";
 
-export default function TabelaClientes({
-  listaDeClientes,
-  setListaDeClientes,
-  setExibirTabela,
-  setModoEdicao,
-  setClienteSelecionado,
-}) {
-  const excluirCliente = (codigo) => {
-    const novaLista = listaDeClientes.filter((cliente) => cliente.codigo !== codigo);
-    setListaDeClientes(novaLista);
-  };
+export default function TelaCadastroCliente() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [clienteSelecionado, setClienteSelecionado] = useState({
+    codigo:0,
+    nome:"",
+    endereco:"",
+    telefone:""
+  });
 
-  const editarCliente = (cliente) => {
-    setClienteSelecionado(cliente);
-    setModoEdicao(true);
-    setExibirTabela(false);
-  };
+  const { listaDeClientes } = useSelector((state) => state.clientes);
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Nome</th>
-          <th>Endereço</th>
-          <th>Telefone</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        {listaDeClientes.map((cliente) => (
-          <tr key={cliente.codigo}>
-            <td>{cliente.codigo}</td>
-            <td>{cliente.nome}</td>
-            <td>{cliente.endereco}</td>
-            <td>{cliente.telefone}</td>
-            <td>
-              <Button
-                variant="warning"
-                size="sm"
-                onClick={() => editarCliente(cliente)}
-              >
-                Editar
-              </Button>{" "}
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={() => excluirCliente(cliente.codigo)}
-              >
-                Excluir
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <>
+      {exibirTabela ? (
+        <TabelaClientes
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setClienteSelecionado={setClienteSelecionado}
+        />
+      ) : (
+        <FormCadClientes
+          listaDeClientes={listaDeClientes}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          clienteSelecionado={clienteSelecionado}
+          setClienteSelecionado={setClienteSelecionado}
+        />
+      )}
+    </>
   );
 }

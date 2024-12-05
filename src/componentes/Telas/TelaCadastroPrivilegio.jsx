@@ -67,7 +67,7 @@ export default function TelaCadastroPrivilegio() {
   const [modoEdicao, setModoEdicao] = useState(false);
   const [privilegioSelecionado, setPrivilegioSelecionado] = useState({
     codigo: "",
-    descricao: "",
+    descricao: ""
   });
 
   const { listaDePrivilegios } = useSelector((state) => state.privilegios);

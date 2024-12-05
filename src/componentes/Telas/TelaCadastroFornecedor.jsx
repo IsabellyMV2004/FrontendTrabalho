@@ -1,4 +1,4 @@
-import { Alert } from "react-bootstrap";
+/*import { Alert } from "react-bootstrap";
 import FormCadFornecedores from "./Formularios/FormCadFornecedor";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -56,4 +56,46 @@ export default function TelaCadastroFornecedor(props) {
         </div>
     );
 
+}*/
+
+
+import { useState } from "react";
+import TabelaFornecedores from "./Tabelas/TabelaFornecedores";
+import FormCadFornecedores from "./Formularios/FormCadFornecedor";
+import { useSelector } from "react-redux";
+
+export default function TelaCadastroFornecedor() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [fornecedorSelecionado, setFornecedorSelecionado] = useState({
+        codigo:0,
+        email:"",
+        senha:"",
+        nome:"",
+        telefone:"",
+        endereco:""
+  });
+
+  const { listaDeFornecedores } = useSelector((state) => state.fornecedores);
+
+  return (
+    <>
+      {exibirTabela ? (
+        <TabelaFornecedores
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setFornecedorSelecionado={setFornecedorSelecionado}
+        />
+      ) : (
+        <FormCadFornecedores
+          listaDeFornecedores={listaDeFornecedores}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          fornecedorSelecionado={fornecedorSelecionado}
+          setFornecedorSelecionado={setFornecedorSelecionado}
+        />
+      )}
+    </>
+  );
 }
