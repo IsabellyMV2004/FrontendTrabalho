@@ -1,4 +1,4 @@
-import { Button, Container, Table } from "react-bootstrap";
+/*import { Button, Container, Table } from "react-bootstrap";
 import { excluirCliente } from "../../../servicos/servicoCliente";
 
 export default function TabelaClientes(props) {
@@ -88,4 +88,6 @@ export default function TabelaClientes(props) {
             </Container>
         </>
     );
-}
+}*/
+
+
