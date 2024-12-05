@@ -1,4 +1,4 @@
-/*import { Button, Spinner, Col, Form, Row } from 'react-bootstrap';
+import { Button, Spinner, Col, Form, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { consultarPrivilegio } from '../../../servicos/servicoPrivilegio';
 import { alterarUsuario, gravarUsuario } from '../../../servicos/servicoUsuario';
@@ -46,7 +46,6 @@ export default function FormCadUsuarios(props) {
 function manipularSubmissao(evento) {
     const form = evento.currentTarget;
     if (form.checkValidity()) {
-        // Formatar a data de validade para o formato "yyyy-mm-dd"
  
         if (!props.modoEdicao) {
             // Cadastrar o usuario
@@ -232,88 +231,3 @@ function manipularSubmissao(evento) {
         </Form>
     );
 }
-*/
-
-
-
-import { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-
-export default function FormCadUsuarios(props) {
-    const { usuarioSelecionado, setUsuarioSelecionado, manipularSubmissao, modoEdicao } = props;
-
-    const [usuario, setUsuario] = useState(usuarioSelecionado);
-
-    useEffect(() => {
-        setUsuario(usuarioSelecionado); // Atualiza o estado quando o usuário selecionado muda
-    }, [usuarioSelecionado]);
-
-    const manipularMudanca = (evento) => {
-        const { name, value } = evento.target;
-        setUsuario((prevUsuario) => ({
-            ...prevUsuario,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = (evento) => {
-        manipularSubmissao(evento); // Chama a função de submissão para salvar as alterações
-    };
-
-    return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-                <Form.Label>Nome</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Digite o nome"
-                    name="nome"
-                    value={usuario.nome}
-                    onChange={manipularMudanca}
-                    required
-                />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Digite o email"
-                    name="email"
-                    value={usuario.email}
-                    onChange={manipularMudanca}
-                    required
-                />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Form.Label>Telefone</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Digite o telefone"
-                    name="telefone"
-                    value={usuario.telefone}
-                    onChange={manipularMudanca}
-                    required
-                />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Form.Label>Endereço</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Digite o endereço"
-                    name="endereco"
-                    value={usuario.endereco}
-                    onChange={manipularMudanca}
-                    required
-                />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-                {modoEdicao ? "Alterar" : "Cadastrar"}
-            </Button>
-        </Form>
-    );
-}
-
