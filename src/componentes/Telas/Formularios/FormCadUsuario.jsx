@@ -269,62 +269,68 @@ export default function FormCadUsuarios(props) {
         });
     }
 
-    function manipularSubmissao(evento) {
-        const form = evento.currentTarget;
-        if (form.checkValidity()) {
-            // Formatar a data de validade para o formato "yyyy-mm-dd"
-            if (!props.modoEdicao) {
-                // Cadastrar o usuário
-                gravarUsuario(usuario)
-                    .then((resultado) => {
-                        if (resultado.status) {
-                            props.setExibirTabela(true);
-                        } else {
-                            toast.error(resultado.mensagem);
-                        }
-                    });
-            } else {
-                // Editar o usuário
-                alterarUsuario(usuario)
-                    .then((resultado) => {
-                        if (resultado.status) {
-                            // Atualizar a lista de usuários após a alteração
-                            props.setListaDeUsuarios(
-                                props.listaDeUsuarios.map((item) => {
-                                    if (item.codigo !== usuario.codigo) return item;
-                                    return usuario;
-                                })
-                            );
-
-                            // Resetar o modo de edição e exibir a tabela novamente
-                            props.setModoEdicao(false);
-                            props.setUsuarioSelecionado({
-                                codigo: 0,
-                                email: "",
-                                senha: "",
-                                nome: "",
-                                telefone: "",
-                                endereco: "",
-                                privilegios: {}
-                            });
-                            props.setExibirTabela(true);
-                        } else {
-                            toast.error(resultado.mensagem);
-                        }
-                    });
-            }
+   
+   // Função para manipular a submissão do formulário
+function manipularSubmissao(evento) {
+    const form = evento.currentTarget;
+    if (form.checkValidity()) {
+        // Formatar a data de validade para o formato "yyyy-mm-dd"
+ 
+        if (!props.modoEdicao) {
+            // Cadastrar o usuario
+            gravarUsuario(usuario)
+                .then((resultado) => {
+                    if (resultado.status) {
+                        props.setExibirTabela(true);
+                    } else {
+                        toast.error(resultado.mensagem);
+                    }
+                });
         } else {
-            setFormValidado(true);
+            // Editar o usuario
+            alterarUsuario(usuario)
+                .then((resultado) => {
+                    if (resultado.status) {
+                        props.setListaDeUsuarios(
+                            props.listaDeUsuarios.map((item) => {
+                                if (item.codigo !== usuario.codigo) return item;
+                                else return usuario;
+                            })
+                        );
+ 
+                        // Após a alteração, resetar o estado para o modo de adição
+                        props.setModoEdicao(false); // Mudar para o modo de adicionar
+                        
+                        // Resetar o usuario selecionado
+                        props.setUsuarioSelecionado({
+                            codigo: 0,
+                            email: "",
+                            senha: "",
+                            nome: "",
+                            telefone: "",
+                            endereco: "",
+                            privilegios: {}
+                        });
+ 
+                        // Mostrar a tabela novamente
+                        props.setExibirTabela(true);
+                    } else {
+                        toast.error(resultado.mensagem);
+                    }
+                });
         }
-        evento.preventDefault();
-        evento.stopPropagation();
+    } else {
+        setFormValidado(true);
     }
-
-    function manipularMudanca(evento) {
-        const elemento = evento.target.name;
-        const valor = evento.target.value;
-        setUsuario({ ...usuario, [elemento]: valor });
-    }
+    evento.preventDefault();
+    evento.stopPropagation();
+ }
+ 
+ function manipularMudanca(evento) {
+    const elemento = evento.target.name;
+    const valor = evento.target.value;
+    setUsuario({ ...usuario, [elemento]: valor });
+ }
 
     return (
         <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
