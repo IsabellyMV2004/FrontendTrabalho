@@ -42,7 +42,7 @@ function App() {
   return (
     <Provider store={store}>
       <ContextoUsuario.Provider value={{ usuario, setUsuario }}>
-        <BrowserRouter>
+        <BrowserRouter basename="FrontendTrabalho">
           {usuario.logado ? (
             <Routes>
               <Route path="/" element={<TelaMenu />} />
