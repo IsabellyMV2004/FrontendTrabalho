@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirFornecedor } from "../../../servicos/servicoFornecedor";
 
 export default function TabelaFornecedores(props) {
@@ -81,12 +81,12 @@ export default function TabelaFornecedores(props) {
             </Container>
         </>
     );
-}*/
+}
 
 
 
 // PARTE DE REDUX
-
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -171,6 +171,6 @@ export default function TabelaFornecedores({ setExibirTabela, setModoEdicao, set
     </Container>
   );
 }
-
+*/
 
 

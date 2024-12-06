@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadFornecedores from "./Formularios/FormCadFornecedor";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -57,13 +57,13 @@ export default function TelaCadastroFornecedor(props) {
     );
 
 }
-*/
+
 
 
 
 
 // PARTE DE REDUX
-
+/*
 import { useState } from "react";
 import TabelaFornecedores from "./Tabelas/TabelaFornecedores";
 import FormCadFornecedores from "./Formularios/FormCadFornecedor";
@@ -103,4 +103,4 @@ export default function TelaCadastroFornecedor() {
       )}
     </>
   );
-}
+}*/

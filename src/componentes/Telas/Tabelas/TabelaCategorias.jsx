@@ -1,4 +1,4 @@
-/*import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { excluirCategoria } from "../../../servicos/servicoCategoria";
 
 export default function TabelaCategorias(props) {
@@ -76,12 +76,12 @@ export default function TabelaCategorias(props) {
             </Container>
         </>
     );
-}*/
+}
 
 
 
 // PARTE DE REDUX
-
+/*
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
@@ -160,5 +160,5 @@ export default function TabelaCategorias({ setExibirTabela, setModoEdicao, setCa
     </Container>
   );
 }
-
+*/
 
