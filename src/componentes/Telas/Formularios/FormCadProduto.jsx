@@ -1,6 +1,4 @@
-import { Button, Spinner, Col, Form, InputGroup,
-    Row
-} from 'react-bootstrap';
+import { Button, Spinner, Col, Form, InputGroup,Row} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { consultarCategoria } from '../../../servicos/servicoCategoria';
 import { alterarProduto, gravarProduto } from '../../../servicos/servicoProduto';
