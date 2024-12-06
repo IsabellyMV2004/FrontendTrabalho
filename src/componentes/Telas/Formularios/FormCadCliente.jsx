@@ -1,4 +1,4 @@
-/*import { Button, Spinner, Col, Form, InputGroup,
+import { Button, Spinner, Col, Form, InputGroup,
     Row
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -160,12 +160,12 @@ return (
        <Toaster position="top-right"/>
    </Form>
 );
-}*/
+}
 
 
 
 // PARTE DE REDUX
-
+/*
 import { useDispatch } from "react-redux";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useState } from 'react';
@@ -275,4 +275,4 @@ export default function FormCadClientes({
       <Button onClick={() => setExibirTabela(true)}>Cancelar</Button>
     </Form>
   );
-}
+}*/

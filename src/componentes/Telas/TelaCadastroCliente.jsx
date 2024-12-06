@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadClientes from "./Formularios/FormCadCliente";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -55,12 +55,12 @@ export default function TelaCadastroCliente(props) {
         </div>
     );
 
-}*/
+}
 
 
 
 // PARTE DE REDUX
-
+/*
 import { useState } from "react";
 import TabelaClientes from "./Tabelas/TabelaClientes";
 import FormCadClientes from "./Formularios/FormCadCliente";
@@ -98,4 +98,4 @@ export default function TelaCadastroCliente() {
       )}
     </>
   );
-}
+}*/
