@@ -1,4 +1,4 @@
-/*import { Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import FormCadProdutos from "./Formularios/FormCadProduto";
 import Pagina from "../layouts/Pagina";
 import { useEffect, useState } from "react";
@@ -59,7 +59,7 @@ export default function TelaCadastroProduto(props) {
         </div>
     );
 
-}*/
+}
 
 
 
